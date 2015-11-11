@@ -1,0 +1,41 @@
+{
+  "name": "roadhouse",
+  "description": "Angular Admin CRUD Tools",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vokal/roadhouse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vokal/roadhouse/issues"
+  },
+  "homepage": "https://github.com/vokal/roadhouse",
+  "main": "source/index",
+  "scripts": {
+    "start": "node server",
+    "webdriver-update": "node ./node_modules/protractor/bin/webdriver-manager update",
+    "test": "npm run webdriver-update && grunt"
+  },
+  "devDependencies": {
+    "angular": "1.4.x",
+    "angular-mocks": "github:vokal/bower-angular-mocks#52745f56ed",
+    "babel-preset-es2015": "^6.1.2",
+    "babelify": "^7.2.0",
+    "browserify-istanbul": "^0.2.1",
+    "express": "^4.13.3",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^4.0.1",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-less": "^1.1.0",
+    "grunt-istanbul": "^0.6.1",
+    "grunt-protractor-coverage": "^0.2.15",
+    "protractor": "^2.5.1"
+  },
+  "dependencies": {
+    "angular-datetime": "github:vokal/angular-datetime",
+    "angular-mocks": "github:vokal/bower-angular-mocks#52745f56ed",
+    "jquery": "^2.1.4",
+    "ng-dialog": "^0.5.5",
+    "toastr": "^2.1.2"
+  }
+}

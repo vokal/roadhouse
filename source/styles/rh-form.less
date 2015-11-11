@@ -1,0 +1,87 @@
+@rh-form-column-bp: 500px;
+@invalid-background: #f2dede;
+@valid-background: #dff0d8;
+@disabled-input-color: #999;
+
+.rh-form,
+.ngdialog-theme-default.rh-form {
+
+    .ngdialog-content {
+        width: 800px;
+    }
+
+    h2 {
+        span {
+            font-weight: bold;
+        }
+    }
+
+    .input-group-wrapper {
+        width: 48%;
+        margin: 0 1% 3% 0;
+        display: inline-block;
+        vertical-align: top;
+
+        .single-col & {
+            width: auto;
+        }
+
+        [disabled] {
+            color: @disabled-input-color;
+        }
+
+        .ng-invalid {
+            & + div + .input-group-addon,
+            & + .input-group-addon {
+                background-color: @invalid-background;
+
+                .glyphicon-ok-circle {
+                    display: none;
+                }
+            }
+        }
+
+        .ng-valid {
+            & + div + .input-group-addon,
+            & + .input-group-addon {
+                background-color: @valid-background;
+
+                .glyphicon-exclamation-sign {
+                    display: none;
+                }
+            }
+        }
+
+        .glyphicon-exclamation-sign {
+            color: #C33;
+        }
+        .glyphicon-ok-circle {
+            color: #3C3;
+        }
+    }
+
+    .form-controls {
+        padding: 20px;
+        border-top: 1px solid @table-border-color;
+
+        button {
+            float: right;
+            padding: 5px;
+            margin: 0 10px 0 0;
+        }
+    }
+
+    .date-picker {
+        z-index: 10;
+    }
+}
+
+@media all and ( max-width: @rh-form-column-bp ) {
+    .rh-form,
+    .ngdialog-theme-default.rh-form {
+        .input-group-wrapper {
+            width: auto;
+            display: block;
+        }
+    }
+}
