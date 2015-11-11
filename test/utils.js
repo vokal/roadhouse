@@ -15,8 +15,7 @@ utils.set = function ( key, val )
 utils.applyScope = function ()
 {
     browser.executeScript(
-        "var scope = angular.element( document.body ).injector().get( '$rootScope' );"
-        + "scope.$apply();" );
+        "angular.element( document.body ).injector().get( '$rootScope' ).$apply();" );
     return utils;
 };
 
