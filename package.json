@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "angular-datetime": "github:vokal/angular-datetime",
-    "angular-mocks": "github:vokal/bower-angular-mocks#52745f56ed",
     "jquery": "^2.1.4",
     "ng-dialog": "^0.5.5",
     "toastr": "^2.1.2"
