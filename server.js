@@ -11,7 +11,7 @@ app.get( "*.*", function ( req, res, next )
 
 app.get( "*", function ( req, res, next )
 {
-    res.status( 200 ).sendFile( __dirname + "/tests/harness.html" );
+    res.status( 200 ).sendFile( __dirname + "/test/harness.html" );
 } );
 
 var port = process.env.PORT || 3000;

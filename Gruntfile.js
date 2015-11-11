@@ -16,7 +16,7 @@ module.exports = function ( grunt )
                 options: {
                     transform: [
                         [ "browserify-istanbul", {
-                            ignore: [ "**/node_modules/**", "**/tests/**" ]
+                            ignore: [ "**/node_modules/**", "**/test/**" ]
                         } ],
                         [ "babelify", { presets: [ "es2015" ] } ]
                     ],
@@ -25,7 +25,7 @@ module.exports = function ( grunt )
                     }
                 },
                 files: {
-                    "build/test.js": [ "tests/harness.js" ]
+                    "build/test.js": [ "test/harness.js" ]
                 }
             }
         },
@@ -40,7 +40,7 @@ module.exports = function ( grunt )
             },
             test: {
                 options: {
-                    configFile: "tests/config/protractor-config.js"
+                    configFile: "test/config/protractor-config.js"
                 }
             }
         },
