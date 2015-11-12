@@ -23,13 +23,19 @@ module.exports = [ "$compile", function ( $compile )
                 return scope.def.type;
             };
 
-            var input = '<input type="' + getType() + '" '
+            var input = "<input "
+            + 'type="' + getType() + '" '
             + 'data-ng-model="model.' + scope.def.key + '" '
+            + ( scope.def.validate ? 'rh-valid="def.validate"' : "" )
+            + ( scope.def.changed ? 'ng-change="def.changed()"' : "" )
             + 'id="' + scope.def.key + '" '
             + 'class="form-control"'
+            + ( scope.def.labelType === "placeholder"
+                ? 'placeholder="' + ( scope.def.name || scope.def.key ) + '" '
+                : "" )
             + ( scope.def.uiMask ? 'ui-mask="' + scope.def.uiMask + '" ' : "" )
             + ( scope.def.required ? "required " : "" )
-            + ( scope.def.canEdit === false || scope.def.canEdit === "initial" && scope.initial ? "disabled " : "" )
+            + 'ng-disabled="def.canEdit === false || def.canEdit === \'initial\' && initial"'
             + ( scope.def.type === "date" ? "data-date-picker " : "" )
             + ">";
 
@@ -41,7 +47,8 @@ module.exports = [ "$compile", function ( $compile )
             + "</span></div>";
 
             var wrapper = '<div class="input-group-wrapper">'
-                + '<label for="' + scope.def.key  + '"><span>' + ( scope.def.name || scope.def.key ) + "</span></label>"
+                + '<label data-ng-class="{ \'hidden-label\': def.labelType === \'placeholder\' }" '
+                + '  for="' + scope.def.key  + '"><span>' + ( scope.def.name || scope.def.key ) + "</span></label>"
                 + inputGroup
                 + "</div>";
 
