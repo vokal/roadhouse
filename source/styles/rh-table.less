@@ -1,0 +1,125 @@
+@rh-table-collapse-width: 767px;
+@table-border-color: #DDD;
+@table-row-even-background: rgba(0,0,0,0.05);
+
+.rh-table {
+    width: 100%;
+    display: inline-table;
+
+    td,
+    th {
+        padding: 10px;
+        border: 1px solid @table-border-color;
+    }
+
+    tbody {
+        tr {
+            transition: background-color 1s, opacity 1s;
+
+            &.updated {
+                background-color: #EFE !important;
+            }
+
+            &.deleted {
+                background-color: #FDD !important;
+                opacity: 0.4;
+            }
+
+            &:nth-child(even) {
+                background: @table-row-even-background;
+            }
+
+            &:hover {
+                background: rgba(0,0,0,0.1);
+            }
+
+            h6 {
+                display: none;
+            }
+
+            i {
+                font-size: 1.5rem;
+                line-height: 1.5rem;
+            }
+
+            a {
+                font-weight: bold;
+            }
+        }
+    }
+
+    thead {
+        tr {
+            background: #FFFFFF;
+
+            th {
+                font-weight: bold;
+                text-align: left;
+                cursor: pointer;
+            }
+
+            &:hover {
+                background: #FFFFFF;
+            }
+        }
+    }
+}
+
+@media all and ( max-width: @rh-table-collapse-width ) {
+
+    .rh-table {
+        thead {
+            display: none;
+        }
+
+        &,
+        tbody,
+        tr,
+        td {
+            display: block;
+        }
+
+        td {
+            border: none;
+            border-bottom: 1px solid @table-border-color;
+
+            &:last-child {
+                border-bottom-color: #999;
+            }
+        }
+
+        tr:first-child td:first-child {
+            border-top: 1px solid #999;
+        }
+
+        tbody tr {
+            td {
+                padding: 4px 10px;
+            }
+
+            span,
+            h6 {
+                line-height: 2.25rem;
+                display: inline-block;
+                vertical-align: top;
+            }
+
+            span {
+                font-size: 1.25rem;
+            }
+
+            h6 {
+                width: 30%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-weight: bold;
+                text-transform: uppercase;
+                margin: 0;
+                padding: 0 10px 0 0;
+                color: #666;
+                font-size: 1rem;
+            }
+        }
+    }
+}
