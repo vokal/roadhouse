@@ -15,6 +15,12 @@ describe( "Roadhouse Table", function ()
         expect( $( "#harness .rh-table" ).isPresent() ).toBe( false );
     } );
 
+    it( "should be empty with an invalid definition", function ()
+    {
+        utils.set( "definition", "tables" );
+        expect( $( "#harness .rh-table" ).isPresent() ).toBe( false );
+    } );
+
     it( "should have no rows without a list", function ()
     {
         utils.set( "definition", { meta: {}, id: {}, name: {} } );
