@@ -9,8 +9,14 @@ module.exports = [ function ()
                     .then( function ( response )
                     {
                         scope.list = response.data.results;
-                        scope.pageCount = response.data.pageCount;
-                        scope.currentPage = response.data.currentPage;
+                        if( response.data.pageCount )
+                        {
+                            scope.pageCount = Number( response.data.pageCount );
+                        }
+                        if( response.data.currentPage )
+                        {
+                            scope.currentPage = Number( response.data.currentPage );
+                        }
                     },
                     function ()
                     {

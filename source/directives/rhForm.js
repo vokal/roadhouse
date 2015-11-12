@@ -12,6 +12,13 @@ module.exports = [ "$compile", function ( $compile )
         },
         link: function ( scope, element )
         {
+            if( typeof( scope.definition ) !== "object" )
+            {
+                element.html( "" );
+                $compile( element.contents() )( scope );
+                return;
+            }
+
             var keys = Object.keys( scope.definition );
             var inputs = [];
             scope.model = scope.model || {};
@@ -27,51 +34,16 @@ module.exports = [ "$compile", function ( $compile )
                 }
             };
 
-            keys.forEach( function ( key )
+            scope.formFields = keys.filter( function ( key )
             {
-                if( key === "meta" )
-                {
-                    return;
-                }
-
                 var def = scope.definition[ key ];
-
-                if( def.canView === false || def.type === "link" )
-                {
-                    return;
-                }
-
-                var getType = function ()
-                {
-                    if( !def.type || def.type === "date" )
-                    {
-                        return "text";
-                    }
-                    return def.type;
-                };
-
-                var input = '<input type="' + getType() + '" '
-                + 'data-ng-model="model.' + key + '" '
-                + 'id="' + key + '" '
-                + 'class="form-control"'
-                + ( def.uiMask ? 'ui-mask="' + def.uiMask + '" ' : "" )
-                + ( def.required ? "required " : "" )
-                + ( def.canEdit === false || def.canEdit === "initial" && scope.model.id ? "disabled " : "" )
-                + ( def.type === "date" ? "data-date-picker " : "" )
-                + ">";
-
-                var inputGroup = '<div class="input-group">'
-                + input
-                + '<span class="input-group-addon">'
-                + '<i class="glyphicon glyphicon-ok-circle"></i>'
-                + '<i class="glyphicon glyphicon-exclamation-sign"></i>'
-                + "</span></div>";
-
-                inputs.push(
-                    '<div class="input-group-wrapper">'
-                    + '<label for="' + def.key  + '"><span>' + ( def.name || key ) + "</span></label>"
-                    + inputGroup
-                    + "</div>" );
+                return key !== "meta" && def.canView !== false && def.type !== "link";
+            } )
+            .map( function ( key )
+            {
+                var def = scope.definition[ key ];
+                def.key = key;
+                return def;
             } );
 
             var form = '<form name="form" class="rh-form" data-ng-submit="saveClick( form )">'
@@ -79,7 +51,9 @@ module.exports = [ "$compile", function ( $compile )
             +   ( !scope.definition.id || scope.model.id ? "Edit " : "Add " )
             +   ( scope.definition.meta.title )
             + "  </h3>"
-            +    inputs.join( "\n" )
+            + '  <div ng-repeat="field in formFields" '
+            + '    rh-field rh-model="model"'
+            + '    rh-definition="field" rh-initial="!!model.id" ></div>'
             + '  <div class="form-controls clearfix initial" data-ng-hide="deletePending">'
             + '    <button type="button" class="btn btn-default" data-ng-click="cancel()">Cancel</button>'
             + ( scope.model.id && scope.definition.meta.canDelete !== false

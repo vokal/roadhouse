@@ -5,7 +5,7 @@ require( "angular-mocks" );
 require( "../source/index.js" );
 
 angular.module( "Harness", [ "roadhouse" ] )
-.run( [ "$rootScope", "$q", function ( $rootScope, $q )
+.run( [ "$rootScope", "$q", "Pager", function ( $rootScope, $q, Pager )
 {
     $rootScope.create = function ( item )
     {
@@ -27,5 +27,23 @@ angular.module( "Harness", [ "roadhouse" ] )
         var defer = $q.defer();
         defer.resolve( { data: {} } );
         return defer.promise;
+    };
+
+    $rootScope.getList = function ( page )
+    {
+        var mockDataService = {
+            getPage: function ()
+            {
+                var defer = $q.defer();
+                defer.resolve( { data: {
+                    results: [ {}, {}, {} ],
+                    pageCount: 10,
+                    currentPage: page.index
+                } } );
+                return defer.promise;
+            }
+        };
+
+        Pager.getPage( $rootScope, mockDataService, page.index );
     };
 } ] );

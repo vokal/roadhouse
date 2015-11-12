@@ -27,6 +27,11 @@
                 rh-on-create="create"
                 rh-on-update="update"
                 rh-on-delete="delete"></div>
+
+            <div data-rh-paginator
+                data-rh-paginator-page-count="pageCount"
+                data-rh-paginator-current-page="currentPage"
+                data-rh-paginator-on-page-selected="getList"></div>
         </div>
 
         <script src="/build/test.js" defer></script>
