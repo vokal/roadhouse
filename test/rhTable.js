@@ -36,8 +36,10 @@ describe( "Roadhouse Table", function ()
 
     it( "should have non-view columns", function ()
     {
-        utils.set( "definition", { meta: {}, id: { canViewList: false }, name: {} } );
+        utils.set( "definition", { meta: {}, id: {}, name: {} } );
+        expect( $$( ".rh-table thead th" ).count() ).toBe( 3 ); // 3 columns
 
+        utils.set( "definition", { meta: {}, id: { canViewList: false }, name: {} } );
         expect( $$( ".rh-table thead th" ).count() ).toBe( 2 ); // 2 columns
     } );
 
