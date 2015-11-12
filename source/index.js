@@ -9,4 +9,5 @@ angular.module( "roadhouse", [ "vokal.datePicker", "ngDialog" ] )
 .service( "Pager", require( "./services/pager" ) )
 .directive( "rhTable", require( "./directives/rhTable" ) )
 .directive( "rhPaginator", require( "./directives/rhPaginator" ) )
-.directive( "rhForm", require( "./directives/rhForm" ) );
+.directive( "rhForm", require( "./directives/rhForm" ) )
+.directive( "rhField", require( "./directives/rhField" ) );
