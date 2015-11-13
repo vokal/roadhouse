@@ -52,16 +52,16 @@ describe( "Roadhouse Table", function ()
     it( "should be able to open Add an item", function ()
     {
         utils
-            .expectNgDialogIsHidden()
+            .expectNgDialogIsNotPresent()
             .addForm()
-            .expectNgDialogIsVisible();
+            .expectNgDialogIsPresent();
     } );
 
     it( "should cancel adding an item", function ()
     {
-        $( ".ngdialog .initial" ).element( by.buttonText( "Cancel" ) ).click();
-        browser.sleep( 1000 );
-        utils.expectNgDialogIsHidden();
+        utils
+            .cancelForm()
+            .expectNgDialogIsNotPresent();
     } );
 
     it( "should save a new item", function ()
@@ -69,7 +69,7 @@ describe( "Roadhouse Table", function ()
         utils.addForm();
         $( ".ngdialog .initial" ).element( by.buttonText( "Save" ) ).click();
         browser.sleep( 1000 );
-        utils.expectNgDialogIsHidden();
+        utils.expectNgDialogIsNotPresent();
         expect( $$( ".rh-table tbody tr" ).count() ).toBe( 3 ); // 3 body rows
     } );
 
@@ -84,7 +84,7 @@ describe( "Roadhouse Table", function ()
         browser.sleep( 1000 );
 
         expect( $( ".rh-table tbody tr:first-child td:first-child" ).getText() ).toBe( "one-edited" );
-        utils.expectNgDialogIsHidden();
+        utils.expectNgDialogIsNotPresent();
         expect( $$( ".rh-table tbody tr.updated" ).count() ).toBe( 2 ); // 2 updated rows
     } );
 
@@ -98,7 +98,7 @@ describe( "Roadhouse Table", function ()
         $( ".ngdialog .delete-confirm" ).element( by.buttonText( "Yes, Delete" ) ).click();
         browser.sleep( 1000 );
 
-        utils.expectNgDialogIsHidden();
+        utils.expectNgDialogIsNotPresent();
         expect( $$( ".rh-table tbody tr.deleted" ).count() ).toBe( 1 ); // 1 deleted row
     } );
 

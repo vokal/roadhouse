@@ -28,15 +28,23 @@ utils.closeNgDialog = function ()
     return utils;
 };
 
-utils.addForm = function ()
+utils.addForm = function ( pauseAfter )
 {
     $( "#add-item-btn" ).click();
+    if( pauseAfter !== false )
+    {
+        browser.sleep( 1000 );
+    }
     return utils;
 };
 
-utils.editForm = function ()
+utils.editForm = function ( pauseAfter )
 {
     $$( ".glyphicon-edit" ).get( 0 ).click();
+    if( pauseAfter !== false )
+    {
+        browser.sleep( 1000 );
+    }
     return utils;
 };
 
@@ -66,6 +74,16 @@ utils.saveForm = function ( pauseAfter )
     return utils;
 };
 
+utils.cancelForm = function ( pauseAfter )
+{
+    $( ".ngdialog .initial" ).element( by.buttonText( "Cancel" ) ).click();
+    if( pauseAfter !== false )
+    {
+        browser.sleep( 1000 );
+    }
+    return utils;
+};
+
 utils.deleteForm = function ( pauseAfter )
 {
     $( ".ngdialog" ).element( by.buttonText( "Delete" ) ).click();
@@ -77,14 +95,26 @@ utils.deleteForm = function ( pauseAfter )
     return utils;
 };
 
-utils.expectNgDialogIsHidden = function ()
+utils.expectNgDialogIsNotPresent = function ()
 {
-    expect( $$( ".ngdialog" ).count() ).toBe( 0 );
+    expect( $( ".ngdialog" ).isPresent() ).toBe( false );
     return utils;
 };
 
-utils.expectNgDialogIsVisible = function ()
+utils.expectNgDialogIsPresent = function ()
 {
-    expect( $$( ".ngdialog" ).count() ).toBe( 1 );
+    expect( $( ".ngdialog" ).isPresent() ).toBe( true );
+    return utils;
+};
+
+utils.expectAddButtonIsNotPresent = function ()
+{
+    expect( $( "#add-item-btn" ).isPresent() ).toBe( false );
+    return utils;
+};
+
+utils.expectAddButtonIsPresent = function ()
+{
+    expect( $( "#add-item-btn" ).isPresent() ).toBe( true );
     return utils;
 };
