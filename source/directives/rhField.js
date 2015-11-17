@@ -34,6 +34,7 @@ module.exports = [ "$compile", function ( $compile )
                 ? 'placeholder="' + ( scope.def.name || scope.def.key ) + '" '
                 : "" )
             + ( scope.def.uiMask ? 'ui-mask="' + scope.def.uiMask + '" ' : "" )
+            + ( scope.def.pattern ? 'pattern="' + scope.def.pattern + '" ' : "" )
             + ( scope.def.required ? "required " : "" )
             + 'ng-disabled="def.canEdit === false || def.canEdit === \'initial\' && initial"'
             + ( scope.def.type === "date" ? "data-date-picker " : "" )

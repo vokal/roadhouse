@@ -8,7 +8,8 @@ module.exports = [ "$compile", function ( $compile )
             save: "=rhOnSave",
             delete: "=rhOnDelete",
             cancel: "=rhOnCancel",
-            model: "=rhModel"
+            model: "=rhModel",
+            titleVisible: "=rhTitleVisible"
         },
         link: function ( scope, element )
         {
@@ -22,6 +23,10 @@ module.exports = [ "$compile", function ( $compile )
             var keys = Object.keys( scope.definition );
             var inputs = [];
             scope.model = scope.model || {};
+            scope.toggleDeletePending = function ()
+            {
+                scope.deletePending = !scope.deletePending;
+            };
             scope.deleteClick = function ()
             {
                 scope.delete( scope.model );
@@ -46,25 +51,29 @@ module.exports = [ "$compile", function ( $compile )
                 return def;
             } );
 
-            var form = '<form name="form" class="rh-form" data-ng-submit="saveClick( form )">'
-            + "  <h3>"
+            var formName = "rh" + ( scope.definition.meta.title || "" ).replace( /[^\w\d]*/g, "" ) + "Form";
+            scope.canDelete = scope.model.id && scope.definition.meta.canDelete !== false;
+
+            var form = '<form name="' + formName + '" class="rh-form" data-ng-submit="saveClick( ' + formName + ' )">'
+            + "  <h3 data-ng-if='titleVisible !== false'>"
             +   ( !scope.definition.id || scope.model.id ? "Edit " : "Add " )
-            +   ( scope.definition.meta.title )
+            +   ( scope.definition.meta.title || "" )
             + "  </h3>"
             + '  <div ng-repeat="field in formFields" '
             + '    rh-field rh-model="model"'
             + '    rh-definition="field" rh-initial="!!model.id" ></div>'
             + '  <div class="form-controls clearfix initial" data-ng-hide="deletePending">'
             + '    <button type="button" class="btn btn-default" data-ng-click="cancel()">Cancel</button>'
-            + ( scope.model.id && scope.definition.meta.canDelete !== false
-                ? '<button type="button" class="btn btn-danger" data-ng-click="deletePending = true">Delete</button>'
-                : "" )
+            + '    <button type="button" class="btn btn-danger" data-ng-if="canDelete"'
+            + '      data-ng-click="toggleDeletePending()">Delete</button>'
             + '    <button id="add-item-submit" type="submit" class="btn btn-primary">Save</button>'
             + "  </div>"
-            + '<div class="form-controls clearfix delete-confirm" data-ng-show="deletePending">'
-            + "  <strong>Do you really want to delete this?</strong>"
-            + '  <button type="button" class="btn btn-danger" data-ng-click="deleteClick()">Yes, Delete</button>'
-            + '  <button type="button" class="btn btn-default" data-ng-click="deletePending = false">Cancel</button>'
+            + '  <div class="form-controls clearfix delete-confirm" '
+            + '    data-ng-if="canDelete" data-ng-show="deletePending">'
+            + "    <strong>Do you really want to delete this?</strong>"
+            + '    <button type="button" class="btn btn-danger" data-ng-click="deleteClick()">Yes, Delete</button>'
+            + '    <button type="button" class="btn btn-default" data-ng-click="toggleDeletePending()">Cancel</button>'
+            + "  </div>"
             + "</form>";
 
             element.html( form );
