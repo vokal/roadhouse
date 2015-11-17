@@ -47,7 +47,7 @@ module.exports = [ "$compile", function ( $compile )
                 return def;
             } );
 
-            var formName = scope.definition.meta.title + "Form";
+            var formName = "rh" + ( scope.definition.meta.title || "" ).replace( /[^\w\d]*/g, "" ) + "Form";
 
             var form = '<form name="' + formName + '" class="rh-form" data-ng-submit="saveClick( ' + formName + ' )">'
             + "  <h3 data-ng-if='titleVisible !== false'>"
