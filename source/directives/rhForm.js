@@ -8,7 +8,8 @@ module.exports = [ "$compile", function ( $compile )
             save: "=rhOnSave",
             delete: "=rhOnDelete",
             cancel: "=rhOnCancel",
-            model: "=rhModel"
+            model: "=rhModel",
+            titleVisible: "=rhTitleVisible"
         },
         link: function ( scope, element )
         {
@@ -47,7 +48,7 @@ module.exports = [ "$compile", function ( $compile )
             } );
 
             var form = '<form name="form" class="rh-form" data-ng-submit="saveClick( form )">'
-            + "  <h3>"
+            + "  <h3 data-ng-if='titleVisible !== false'>"
             +   ( !scope.definition.id || scope.model.id ? "Edit " : "Add " )
             +   ( scope.definition.meta.title )
             + "  </h3>"
