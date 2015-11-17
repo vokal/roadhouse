@@ -156,7 +156,7 @@ module.exports = [ "$compile", "$rootScope", "ngDialog", function ( $compile, $r
                     }
                     else if( scope.definition.meta.canCreate && scope.definition.meta.canCreate.max )
                     {
-                        return scope.list.filter( i => !i.meta || !i.meta.deleted ).length
+                        return scope.list.filter( function ( i ) { return !i.meta || !i.meta.deleted; } ).length
                             < scope.definition.meta.canCreate.max;
                     }
                     return true;
