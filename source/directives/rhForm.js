@@ -47,7 +47,9 @@ module.exports = [ "$compile", function ( $compile )
                 return def;
             } );
 
-            var form = '<form name="form" class="rh-form" data-ng-submit="saveClick( form )">'
+            var formName = scope.definition.meta.title + "Form";
+
+            var form = '<form name="' + formName + '" class="rh-form" data-ng-submit="saveClick( ' + formName + ' )">'
             + "  <h3 data-ng-if='titleVisible !== false'>"
             +   ( !scope.definition.id || scope.model.id ? "Edit " : "Add " )
             +   ( scope.definition.meta.title )
