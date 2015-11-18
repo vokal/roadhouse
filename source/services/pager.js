@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = [ function ()
+module.exports = [ "alertify", function ( alertify )
     {
         return {
             getPage: function ( scope, dataService, page )
@@ -20,7 +20,7 @@ module.exports = [ function ()
                     },
                     function ()
                     {
-                        toastr.error( "Oops, there was an issue retrieving the list", "Error" );
+                        alertify.error( "Oops, there was an issue retrieving the list" );
                     } );
             }
         };

@@ -1,6 +1,7 @@
 "use strict";
 
-module.exports = [ "$compile", "$rootScope", "ngDialog", function ( $compile, $rootScope, ngDialog )
+module.exports = [ "$compile", "$rootScope", "ngDialog", "alertify",
+function ( $compile, $rootScope, ngDialog, alertify )
 {
     var formTemplate = "<div data-rh-form"
         + ' data-rh-definition="definition"'
@@ -50,7 +51,7 @@ module.exports = [ "$compile", "$rootScope", "ngDialog", function ( $compile, $r
                         },
                         function ()
                         {
-                            toastr.error( "Oops, There was an issue deleting the item", "Error" );
+                            alertify.error( "Oops, There was an issue deleting the item" );
                         } );
                 };
 
@@ -78,7 +79,7 @@ module.exports = [ "$compile", "$rootScope", "ngDialog", function ( $compile, $r
                         },
                         function ()
                         {
-                            toastr.error( "Oops, there was a problem updating the item", "Error" );
+                            alertify.error( "Oops, there was a problem updating the item" );
                         } );
                 };
                 openDialog( dialogScope );
@@ -100,7 +101,7 @@ module.exports = [ "$compile", "$rootScope", "ngDialog", function ( $compile, $r
                         },
                         function ()
                         {
-                            toastr.error( "Oops, there was an issue creating the item", "Error" );
+                            alertify.error( "Oops, there was an issue creating the item" );
                         } );
                 };
                 openDialog( dialogScope );
