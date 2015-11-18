@@ -1,5 +1,7 @@
 "use strict";
 
+var utils = require( "../utils" );
+
 module.exports = [ "$compile", function ( $compile )
 {
     return {
@@ -23,6 +25,8 @@ module.exports = [ "$compile", function ( $compile )
                 return scope.def.type;
             };
 
+            scope.canEdit = utils.runIfFunc( scope.def.canEdit );
+
             var input = "<input "
             + 'type="' + getType() + '" '
             + 'data-ng-model="model.' + scope.def.key + '" '
@@ -36,7 +40,7 @@ module.exports = [ "$compile", function ( $compile )
             + ( scope.def.uiMask ? 'ui-mask="' + scope.def.uiMask + '" ' : "" )
             + ( scope.def.pattern ? 'pattern="' + scope.def.pattern + '" ' : "" )
             + ( scope.def.required ? "required " : "" )
-            + 'ng-disabled="def.canEdit === false || def.canEdit === \'initial\' && initial"'
+            + 'ng-disabled="canEdit === false || canEdit === \'initial\' && initial"'
             + ( scope.def.type === "date" ? "data-date-picker " : "" )
             + ">";
 

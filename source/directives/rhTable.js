@@ -1,5 +1,7 @@
 "use strict";
 
+var utils = require( "../utils" );
+
 module.exports = [ "$compile", "$rootScope", "ngDialog", "alertify",
 function ( $compile, $rootScope, ngDialog, alertify )
 {
@@ -117,7 +119,7 @@ function ( $compile, $rootScope, ngDialog, alertify )
                 if( def.href )
                 {
                     return wrapCell( '<a data-ng-href="'
-                        + ( typeof def.href === "function" ? def.href() : def.href )
+                        + utils.runIfFunc( def.href )
                         + ( def.hrefTarget ? '" target="' + def.hrefTarget + '" ' : "" )
                         + '">' + ( def.name || key ) + "</a>" );
                 }
@@ -151,7 +153,7 @@ function ( $compile, $rootScope, ngDialog, alertify )
 
                 scope.canCreate = function ()
                 {
-                    if( scope.definition.meta.canCreate === false )
+                    if( utils.runIfFunc( scope.definition.meta.canCreate ) === false )
                     {
                         return false;
                     }
@@ -181,7 +183,7 @@ function ( $compile, $rootScope, ngDialog, alertify )
                     tbody.push( getCell( key, def ) );
                 } );
 
-                if( scope.definition.meta.canEdit !== false )
+                if( utils.runIfFunc( scope.definition.meta.canEdit ) !== false )
                 {
                     thead.push( "<th></th>" );
                     tbody.push( '<td><h6>Edit</h6><span><i data-ng-click="editClick( item )"'
