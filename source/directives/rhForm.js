@@ -17,7 +17,7 @@ module.exports = [ "$compile", function ( $compile )
         {
             var render = function ()
             {
-                if( typeof( scope.definition ) !== "object" || !scope.definition.meta )
+                if( typeof( scope.definition ) !== "object" )
                 {
                     element.html( "" );
                     $compile( element.contents() )( scope );
@@ -26,6 +26,7 @@ module.exports = [ "$compile", function ( $compile )
 
                 var keys = Object.keys( scope.definition );
                 var inputs = [];
+                scope.definition.meta = scope.definition.meta || {};
                 scope.model = scope.model || {};
                 scope.toggleDeletePending = function ()
                 {
