@@ -2,10 +2,9 @@
 
 require( "angular-datetime" );
 require( "ng-dialog" );
-global.toastr = require( "toastr" );
-global.jQuery = global.$ = require( "jquery" );
+require( "alertify.js/dist/js/ngAlertify" );
 
-angular.module( "roadhouse", [ "vokal.datePicker", "ngDialog" ] )
+angular.module( "roadhouse", [ "vokal.datePicker", "ngDialog", "ngAlertify" ] )
 .service( "Pager", require( "./services/pager" ) )
 .directive( "rhTable", require( "./directives/rhTable" ) )
 .directive( "rhPaginator", require( "./directives/rhPaginator" ) )

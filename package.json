@@ -33,9 +33,8 @@
     "protractor": "^2.5.1"
   },
   "dependencies": {
+    "alertify.js": "^1.0.6",
     "angular-datetime": "github:vokal/angular-datetime",
-    "jquery": "^2.1.4",
-    "ng-dialog": "^0.5.5",
-    "toastr": "^2.1.2"
+    "ng-dialog": "^0.5.5"
   }
 }

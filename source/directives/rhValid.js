@@ -23,7 +23,9 @@ module.exports = [ "$q", function ( $q )
 
                     var comparison = angular.element( document.querySelector( "#" + validator.sameAsModel.key ) );
 
-                    if( comparison && comparison.data( "$ngModelController" ).$modelValue === viewValue )
+                    if( comparison
+                        && comparison.data( "$ngModelController" )
+                        && comparison.data( "$ngModelController" ).$modelValue === viewValue )
                     {
                         defer.resolve( true );
                     }

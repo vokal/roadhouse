@@ -46,4 +46,29 @@ angular.module( "Harness", [ "roadhouse" ] )
 
         Pager.getPage( $rootScope, mockDataService, page.index );
     };
+
+
+    var notValid = $q.defer();
+    notValid.reject( "nope" );
+
+    var valid = $q.defer();
+    valid.resolve( true );
+
+    $rootScope.validators = {
+        model: {},
+        definition: {
+            meta: {},
+            a: {
+                validate: () => notValid.promise
+            },
+            b: {
+                validate: () => valid.promise
+            },
+            c: { key: "c" },
+            d: {
+                key: "d",
+                validate: { sameAsModel: { key: "c" } }
+            }
+        }
+    };
 } ] );

@@ -1,6 +1,9 @@
 "use strict";
 
-module.exports = [ "$compile", "$rootScope", "ngDialog", function ( $compile, $rootScope, ngDialog )
+var utils = require( "../utils" );
+
+module.exports = [ "$compile", "$rootScope", "ngDialog", "alertify",
+function ( $compile, $rootScope, ngDialog, alertify )
 {
     var formTemplate = "<div data-rh-form"
         + ' data-rh-definition="definition"'
@@ -50,7 +53,7 @@ module.exports = [ "$compile", "$rootScope", "ngDialog", function ( $compile, $r
                         },
                         function ()
                         {
-                            toastr.error( "Oops, There was an issue deleting the item", "Error" );
+                            alertify.error( "Oops, There was an issue deleting the item" );
                         } );
                 };
 
@@ -78,7 +81,7 @@ module.exports = [ "$compile", "$rootScope", "ngDialog", function ( $compile, $r
                         },
                         function ()
                         {
-                            toastr.error( "Oops, there was a problem updating the item", "Error" );
+                            alertify.error( "Oops, there was a problem updating the item" );
                         } );
                 };
                 openDialog( dialogScope );
@@ -100,7 +103,7 @@ module.exports = [ "$compile", "$rootScope", "ngDialog", function ( $compile, $r
                         },
                         function ()
                         {
-                            toastr.error( "Oops, there was an issue creating the item", "Error" );
+                            alertify.error( "Oops, there was an issue creating the item" );
                         } );
                 };
                 openDialog( dialogScope );
@@ -116,7 +119,7 @@ module.exports = [ "$compile", "$rootScope", "ngDialog", function ( $compile, $r
                 if( def.href )
                 {
                     return wrapCell( '<a data-ng-href="'
-                        + ( typeof def.href === "function" ? def.href() : def.href )
+                        + utils.runIfFunc( def.href )
                         + ( def.hrefTarget ? '" target="' + def.hrefTarget + '" ' : "" )
                         + '">' + ( def.name || key ) + "</a>" );
                 }
@@ -150,13 +153,13 @@ module.exports = [ "$compile", "$rootScope", "ngDialog", function ( $compile, $r
 
                 scope.canCreate = function ()
                 {
-                    if( scope.definition.meta.canCreate === false )
+                    if( utils.runIfFunc( scope.definition.meta.canCreate ) === false )
                     {
                         return false;
                     }
                     else if( scope.definition.meta.canCreate && scope.definition.meta.canCreate.max )
                     {
-                        return scope.list.filter( i => !i.meta || !i.meta.deleted ).length
+                        return scope.list.filter( function ( i ) { return !i.meta || !i.meta.deleted; } ).length
                             < scope.definition.meta.canCreate.max;
                     }
                     return true;
@@ -180,7 +183,7 @@ module.exports = [ "$compile", "$rootScope", "ngDialog", function ( $compile, $r
                     tbody.push( getCell( key, def ) );
                 } );
 
-                if( scope.definition.meta.canEdit !== false )
+                if( utils.runIfFunc( scope.definition.meta.canEdit ) !== false )
                 {
                     thead.push( "<th></th>" );
                     tbody.push( '<td><h6>Edit</h6><span><i data-ng-click="editClick( item )"'
