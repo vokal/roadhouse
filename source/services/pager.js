@@ -1,11 +1,12 @@
 "use strict";
 
-module.exports = [ "alertify", function ( alertify )
+module.exports = [ "alertify",  "$location",
+    function ( alertify, $location )
     {
         return {
             getPage: function ( scope, dataService, page )
             {
-                dataService.getPage( page && page.index || 1 )
+                dataService.getPage( page && page.index || Number( $location.search().rhcurrentpage ) || 1 )
                     .then( function ( response )
                     {
                         scope.list = response.data.results;
