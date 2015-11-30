@@ -58,7 +58,14 @@ utils.sendToForm = function ( data )
         }
         else if( typeof( data[ key ] ) === "boolean" )
         {
-            element( by.model( "model." + key ) ).click();
+            if( data[ key ] )
+            {
+                $( "[data-ng-click='model." + key + " = true']" ).click();
+            }
+            else
+            {
+                $( "[data-ng-click='model." + key + " = false']" ).click();
+            }
         }
     } );
     return utils;
