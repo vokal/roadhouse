@@ -25,11 +25,12 @@ module.exports = [ "$compile", function ( $compile )
                 return scope.def.type;
             };
 
+            var modelName = "model." + scope.def.key;
             scope.canEdit = utils.runIfFunc( scope.def.canEdit );
 
             var input = "<input "
             + 'type="' + getType() + '" '
-            + 'data-ng-model="model.' + scope.def.key + '" '
+            + 'data-ng-model="' + modelName + '" '
             + ( scope.def.validate ? 'rh-valid="def.validate"' : "" )
             + ( scope.def.changed ? 'ng-change="def.changed()"' : "" )
             + 'id="' + scope.def.key + '" '
@@ -43,6 +44,18 @@ module.exports = [ "$compile", function ( $compile )
             + 'ng-disabled="canEdit === false || canEdit === \'initial\' && initial"'
             + ( scope.def.type === "date" ? "data-date-picker " : "" )
             + ">";
+
+            if( getType() === "checkbox" )
+            {
+                input += '<div class="btn-group" role="group">'
+                + '  <button type="button" class="btn btn-default"'
+                + '     data-ng-click="' + modelName + ' = true"'
+                + '     data-ng-class="{ \'active\': ' + modelName + ' }">Yes</button>'
+                + '  <button type="button" class="btn btn-default"'
+                + '     data-ng-click="' + modelName + ' = false"'
+                + '     data-ng-class="{ \'active\': !' + modelName + ' }">No</button>'
+                + "</div>";
+            }
 
             var inputGroup = '<div class="input-group">'
             + input

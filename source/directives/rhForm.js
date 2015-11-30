@@ -56,13 +56,14 @@ module.exports = [ "$compile", function ( $compile )
                     return def;
                 } );
 
-                var formName = "rh" + ( scope.definition.meta.title || "" ).replace( /[^\w\d]*/g, "" ) + "Form";
+                scope.formName = "rh" + ( scope.definition.meta.title || "" ).replace( /[^\w\d]*/g, "" ) + "Form";
                 scope.canDelete = scope.model.id && utils.runIfFunc( scope.definition.meta.canDelete ) !== false;
 
-                var form = '<form name="' + formName + '" class="rh-form" data-ng-submit="saveClick( ' + formName + ' )">'
+
+                var form = '<form name="{{ formName }}" class="rh-form" data-ng-submit="saveClick( ' + scope.formName + ' )">'
                 + "  <h3 data-ng-if='titleVisible !== false'>"
-                +   ( !scope.definition.id || scope.model.id ? "Edit " : "Add " )
-                +   ( scope.definition.meta.title || "" )
+                + '    {{ !definition.id || model.id ? "Edit " : "Add "}}'
+                + '    {{ scope.definition.meta.title || "" }}'
                 + "  </h3>"
                 + '  <div ng-repeat="field in formFields" '
                 + '    rh-field rh-model="model"'

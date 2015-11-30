@@ -7,7 +7,7 @@
 .ngdialog-theme-default.rh-form {
 
     .ngdialog-content {
-        width: 800px;
+        width: 600px;
     }
 
     h2 {
@@ -17,17 +17,25 @@
     }
 
     .input-group-wrapper {
-        width: 48%;
-        margin: 0 1% 3% 0;
-        display: inline-block;
+        margin-bottom: 1.25rem;
         vertical-align: top;
 
-        .single-col & {
-            width: auto;
+        .two-col & {
+            width: 48%;
+            margin: 0 1% 3% 0;
+            display: inline-block;
         }
 
         [disabled] {
             color: @disabled-input-color;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+
+            & + div + .input-group-addon {
+                display: none;
+            }
         }
 
         .ng-invalid {
