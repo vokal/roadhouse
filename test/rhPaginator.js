@@ -50,4 +50,11 @@ describe( "Roadhouse Paginator", function ()
         expect( $( ".rh-paginator li:nth-child(3).active" ).isPresent() ).toBe( true );
     } );
 
+    it( "should focus page ranges around the selected page", function ()
+    {
+        expect( $( ".rh-paginator .glyphicon-chevron-left" ).isPresent() ).toBe( false );
+        $( ".rh-paginator li:nth-child(5)" ).click();
+        expect( $( ".rh-paginator .glyphicon-chevron-left" ).isPresent() ).toBe( true );
+    } );
+
 } );
