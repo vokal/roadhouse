@@ -102,6 +102,23 @@ describe( "Roadhouse Table", function ()
         expect( $$( ".rh-table tbody tr.deleted" ).count() ).toBe( 1 ); // 1 deleted row
     } );
 
+    it( "should have a toggle for checkboxes", function ()
+    {
+        utils.set( "definition", { meta: {}, id: {}, is: { type: "checkbox" } } );
+
+        utils
+            .addForm()
+            .sendToForm( { is: true } );
+
+        expect( $( ".rh-no.active" ).isPresent() ).toBe( false );
+        expect( $( ".rh-yes.active" ).isPresent() ).toBe( true );
+
+        utils.sendToForm( { is: false } );
+
+        expect( $( ".rh-no.active" ).isPresent() ).toBe( true );
+        expect( $( ".rh-yes.active" ).isPresent() ).toBe( false );
+    } );
+
     it( "should have no add button when canCreate is false", function ()
     {
         expect( $( "#add-item-btn" ).isPresent() ).toBe( true );

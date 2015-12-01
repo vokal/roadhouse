@@ -48,10 +48,10 @@ module.exports = [ "$compile", function ( $compile )
             if( getType() === "checkbox" )
             {
                 input += '<div class="btn-group" role="group">'
-                + '  <button type="button" class="btn btn-default"'
+                + '  <button type="button" class="btn btn-default rh-yes"'
                 + '     data-ng-click="' + modelName + ' = true"'
                 + '     data-ng-class="{ \'active\': ' + modelName + ' }">Yes</button>'
-                + '  <button type="button" class="btn btn-default"'
+                + '  <button type="button" class="btn btn-default rh-no"'
                 + '     data-ng-click="' + modelName + ' = false"'
                 + '     data-ng-class="{ \'active\': !' + modelName + ' }">No</button>'
                 + "</div>";
