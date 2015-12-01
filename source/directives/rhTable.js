@@ -204,7 +204,7 @@ function ( $compile, $rootScope, ngDialog, alertify )
                     + tbody.join( "\n" ) + "</tr></tbody>"
                 + "</table>";
 
-                element.html( controls + table );
+                element.html( "<div>" + controls + table + "</div>" );
                 $compile( element.contents() )( scope );
             };
 
