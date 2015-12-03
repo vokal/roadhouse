@@ -28,22 +28,23 @@ module.exports = [ "$compile", function ( $compile )
             var modelName = "model." + scope.def.key;
             scope.canEdit = utils.runIfFunc( scope.def.canEdit );
 
+            var inputAttrs = 'data-ng-model="' + modelName + '" '
+                + ( scope.def.validate ? 'rh-valid="def.validate"' : "" )
+                + ( scope.def.changed ? 'ng-change="def.changed()"' : "" )
+                + 'id="' + scope.def.key + '" '
+                + 'class="form-control"'
+                + ( scope.def.labelType === "placeholder"
+                    ? 'placeholder="' + ( scope.def.name || scope.def.key ) + '" '
+                    : "" )
+                + ( scope.def.uiMask ? 'ui-mask="' + scope.def.uiMask + '" ' : "" )
+                + ( scope.def.pattern ? 'pattern="' + scope.def.pattern + '" ' : "" )
+                + ( scope.def.required ? "required " : "" )
+                + 'ng-disabled="canEdit === false || canEdit === \'initial\' && initial"'
+                + ( scope.def.type === "date" ? "data-date-picker " : "" );
+
             var input = "<input "
-            + 'type="' + getType() + '" '
-            + 'data-ng-model="' + modelName + '" '
-            + ( scope.def.validate ? 'rh-valid="def.validate"' : "" )
-            + ( scope.def.changed ? 'ng-change="def.changed()"' : "" )
-            + 'id="' + scope.def.key + '" '
-            + 'class="form-control"'
-            + ( scope.def.labelType === "placeholder"
-                ? 'placeholder="' + ( scope.def.name || scope.def.key ) + '" '
-                : "" )
-            + ( scope.def.uiMask ? 'ui-mask="' + scope.def.uiMask + '" ' : "" )
-            + ( scope.def.pattern ? 'pattern="' + scope.def.pattern + '" ' : "" )
-            + ( scope.def.required ? "required " : "" )
-            + 'ng-disabled="canEdit === false || canEdit === \'initial\' && initial"'
-            + ( scope.def.type === "date" ? "data-date-picker " : "" )
-            + ">";
+                + 'type="' + getType() + '" '
+                + inputAttrs + ">";
 
             if( getType() === "checkbox" )
             {
@@ -55,6 +56,11 @@ module.exports = [ "$compile", function ( $compile )
                 + '     data-ng-click="' + modelName + ' = false"'
                 + '     data-ng-class="{ \'active\': !' + modelName + ' }">No</button>'
                 + "</div>";
+            }
+
+            if( scope.def.fieldDirective )
+            {
+                input = "<div " + inputAttrs + " " + scope.def.fieldDirective + "></div>";
             }
 
             var inputGroup = '<div class="input-group">'

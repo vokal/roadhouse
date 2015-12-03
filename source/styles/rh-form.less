@@ -82,6 +82,27 @@
     .date-picker {
         z-index: 10;
     }
+
+    [years-and-days] {
+        background: none transparent;
+        padding: 0;
+        border: none;
+
+        .input-group {
+            width: 45%;
+            margin-right: 5%;
+            float: left;
+
+            .input-group-addon {
+                background-color: #EEE;
+            }
+        }
+
+        & + .input-group-addon:last-child {
+            border-left: 1px solid #CCC;
+            border-radius: 4px;
+        }
+    }
 }
 
 @media all and ( max-width: @rh-form-column-bp ) {

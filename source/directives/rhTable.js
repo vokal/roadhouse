@@ -129,7 +129,10 @@ function ( $compile, $rootScope, ngDialog, alertify )
                         + key + ' ? \'ok\' : \'unchecked\' }}"></i>' );
                 }
 
-                return wrapCell( "{{ item." + key + ( def.type === "date" ? " | date" : "" ) + " }}" );
+                return wrapCell( "{{ item." + key
+                    + ( def.tableFilter ? " | " + def.tableFilter :
+                        ( def.type === "date" ? " | date" : "" ) )
+                    + " }}" );
             };
 
             var render = function ()
