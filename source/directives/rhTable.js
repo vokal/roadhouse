@@ -74,16 +74,9 @@ function ( $compile, $rootScope, ngDialog, alertify )
                     scope.update( item )
                         .then( function ( response )
                         {
-                            if( scope.definition.meta.refreshOnSave !== false )
-                            {
-                                var updatedItem = response.data;
-                                updatedItem.meta = { updated: true };
-                                scope.list.splice( getIndexById( item.id ), 1, updatedItem );
-                            }
-                            else
-                            {
-                                item.meta = { updated: true };
-                            }
+                            var updatedItem = scope.definition.meta.refreshOnSave !== false ? response.data : item;
+                            updatedItem.meta = { updated: true };
+                            scope.list.splice( getIndexById( item.id ), 1, updatedItem );
                             ngDialog.close();
                         },
                         function ()
