@@ -63,7 +63,7 @@ module.exports = [ "$compile", function ( $compile )
                 var form = '<form name="{{ formName }}" class="rh-form" data-ng-submit="saveClick( ' + scope.formName + ' )">'
                 + "  <h3 data-ng-if='titleVisible !== false'>"
                 + '    {{ !definition.id || model.id ? "Edit " : "Add "}}'
-                + '    {{ scope.definition.meta.title || "" }}'
+                + '    {{ definition.meta.title || "" }}'
                 + "  </h3>"
                 + '  <div ng-repeat="field in formFields" '
                 + '    rh-field rh-model="model"'
