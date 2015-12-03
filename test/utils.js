@@ -60,13 +60,22 @@ utils.sendToForm = function ( data )
         {
             if( data[ key ] )
             {
-                $( "[data-ng-click='model." + key + " = true']" ).click();
+                $( ".rh-true" ).click();
             }
             else
             {
-                $( "[data-ng-click='model." + key + " = false']" ).click();
+                $( ".rh-false" ).click();
             }
         }
+    } );
+    return utils;
+};
+
+utils.selectOnForm = function ( data )
+{
+    Object.keys( data ).forEach( key =>
+    {
+        $( ".rh-" + data[ key ] ).click();
     } );
     return utils;
 };

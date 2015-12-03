@@ -58,7 +58,7 @@ module.exports = [ "$compile", function ( $compile )
             {
                 input += '<div class="btn-group" role="group">'
                 + '  <button data-ng-repeat="option in def.options" type="button"'
-                + '     class="btn btn-default rh-{{ option.value }}"'
+                + '     class="btn btn-default rh-{{ option.value === true ? \'true\' : option.value === false ? \'false\' : option.value | slugify }}"'
                 + '     data-ng-click="' + modelName + ' = option.value"'
                 + '     data-ng-class="{ \'active\': ' + modelName + ' === option.value }">{{ option.name }}</button>'
                 + "</div>";
