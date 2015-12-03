@@ -30,11 +30,14 @@
             color: @disabled-input-color;
         }
 
-        input[type="checkbox"] {
-            display: none;
-
-            & + div + .input-group-addon {
+        &.rh-checkbox,
+        &.rh-select {
+            input {
                 display: none;
+
+                & + div + .input-group-addon {
+                    display: none;
+                }
             }
         }
 

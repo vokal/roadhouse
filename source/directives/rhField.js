@@ -48,13 +48,19 @@ module.exports = [ "$compile", function ( $compile )
 
             if( getType() === "checkbox" )
             {
+                scope.def.options = [
+                    { name: "Yes", value: true },
+                    { name: "No", value: false }
+                ];
+            }
+
+            if( scope.def.options )
+            {
                 input += '<div class="btn-group" role="group">'
-                + '  <button type="button" class="btn btn-default rh-yes"'
-                + '     data-ng-click="' + modelName + ' = true"'
-                + '     data-ng-class="{ \'active\': ' + modelName + ' }">Yes</button>'
-                + '  <button type="button" class="btn btn-default rh-no"'
-                + '     data-ng-click="' + modelName + ' = false"'
-                + '     data-ng-class="{ \'active\': !' + modelName + ' }">No</button>'
+                + '  <button data-ng-repeat="option in def.options" type="button"'
+                + '     class="btn btn-default rh-{{ option.value }}"'
+                + '     data-ng-click="' + modelName + ' = option.value"'
+                + '     data-ng-class="{ \'active\': ' + modelName + ' === option.value }">{{ option.name }}</button>'
                 + "</div>";
             }
 
@@ -70,7 +76,7 @@ module.exports = [ "$compile", function ( $compile )
             + '<i class="glyphicon glyphicon-exclamation-sign"></i>'
             + "</span></div>";
 
-            var wrapper = '<div class="input-group-wrapper">'
+            var wrapper = '<div class="input-group-wrapper rh-' + getType() + '">'
                 + '<label data-ng-class="{ \'hidden-label\': def.labelType === \'placeholder\' }" '
                 + '  for="' + scope.def.key  + '"><span>' + ( scope.def.name || scope.def.key ) + "</span></label>"
                 + inputGroup
