@@ -48,6 +48,15 @@ utils.editForm = function ( pauseAfter )
     return utils;
 };
 
+utils.clearOnForm = function ( keys )
+{
+    keys.forEach( key =>
+    {
+        element( by.model( "model." + key ) ).clear();
+    } );
+    return utils;
+};
+
 utils.sendToForm = function ( data )
 {
     Object.keys( data ).forEach( key =>
