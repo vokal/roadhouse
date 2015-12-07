@@ -77,7 +77,7 @@ module.exports = [ "$compile", function ( $compile )
                 + '  <div class="form-controls clearfix delete-confirm" '
                 + '    data-ng-if="canDelete" data-ng-show="deletePending">'
                 + "    <strong>Do you really want to delete this?</strong>"
-                + '    <button type="button" class="btn btn-danger" data-ng-click="deleteClick()">Yes, Delete</button>'
+                + '    <button type="button" class="btn btn-danger" data-ng-click="deleteClick()">Confirm</button>'
                 + '    <button type="button" class="btn btn-default" data-ng-click="toggleDeletePending()">Cancel</button>'
                 + "  </div>"
                 + "</form>";
