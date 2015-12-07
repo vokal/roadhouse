@@ -91,7 +91,7 @@ module.exports = [ "$compile", function ( $compile )
 
                     scope.$watch( modelName, function ( newVal, oldVal )
                     {
-                        if( newVal !== oldVal )
+                        if( newVal )
                         {
                             scope.selected = scope.def.options.filter( function ( item )
                             {
