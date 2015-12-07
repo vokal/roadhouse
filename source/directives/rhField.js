@@ -39,12 +39,21 @@ module.exports = [ "$compile", function ( $compile )
                 {
                     return "^.+://.+\\..{2,}$";
                 }
+                if( getType() === "tel" )
+                {
+                    return ".*\\d.*\\d.*\\d.*\\d.*\\d.*\\d.*\\d.*\\d.*";
+                }
                 return null;
             };
 
             var pattern = getPattern();
             var modelName = "model." + scope.def.key;
             scope.canEdit = utils.runIfFunc( scope.def.canEdit );
+
+            if( scope.def.default && !scope.model[ scope.def.key ] )
+            {
+                scope.model[ scope.def.key ] = scope.def.default;
+            }
 
             var inputAttrs = 'data-ng-model="' + modelName + '" '
                 + ( scope.def.validate ? 'rh-valid="def.validate"' : "" )
@@ -74,12 +83,37 @@ module.exports = [ "$compile", function ( $compile )
 
             if( scope.def.options )
             {
-                input += '<div class="btn-group" role="group">'
-                + '  <button data-ng-repeat="option in def.options" type="button"'
-                + '     class="btn btn-default rh-{{ option.value === true ? \'true\' : option.value === false ? \'false\' : option.value | slugify }}"'
-                + '     data-ng-click="' + modelName + ' = option.value"'
-                + '     data-ng-class="{ \'active\': ' + modelName + ' === option.value }">{{ option.name }}</button>'
-                + "</div>";
+                if( getType() === "select" )
+                {
+                    input = '<select data-ng-model="selected" data-ng-change="select()"'
+                    + ' data-ng-options="option as option.name for option in def.options"'
+                    + inputAttrs + "></select>";
+
+                    scope.$watch( modelName, function ( newVal, oldVal )
+                    {
+                        if( newVal !== oldVal )
+                        {
+                            scope.selected = scope.def.options.filter( function ( item )
+                            {
+                                return item.value === newVal;
+                            } )[ 0 ];
+                        }
+                    } );
+
+                    scope.select = function ()
+                    {
+                        scope.model[ scope.def.key ] = scope.selected ? scope.selected.value : null;
+                    };
+                }
+                else
+                {
+                    input += '<div class="btn-group" role="group">'
+                    + '  <button data-ng-repeat="option in def.options" type="button"'
+                    + '     class="btn btn-default rh-{{ option.value === true ? \'true\' : option.value === false ? \'false\' : option.value | slugify }}"'
+                    + '     data-ng-click="' + modelName + ' = option.value"'
+                    + '     data-ng-class="{ \'active\': ' + modelName + ' === option.value }">{{ option.name }}</button>'
+                    + "</div>";
+                }
             }
 
             if( scope.def.fieldDirective )
