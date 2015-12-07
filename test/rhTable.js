@@ -95,7 +95,7 @@ describe( "Roadhouse Table", function ()
 
         $$( ".rh-table tbody tr .glyphicon-edit" ).get( 2 ).click();
         $( ".ngdialog .initial" ).element( by.buttonText( "Delete" ) ).click();
-        $( ".ngdialog .delete-confirm" ).element( by.buttonText( "Yes, Delete" ) ).click();
+        $( ".ngdialog .delete-confirm" ).element( by.buttonText( "Confirm" ) ).click();
         browser.sleep( 1000 );
 
         utils.expectNgDialogIsNotPresent();

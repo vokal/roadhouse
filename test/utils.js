@@ -112,7 +112,7 @@ utils.cancelForm = function ( pauseAfter )
 utils.deleteForm = function ( pauseAfter )
 {
     $( ".ngdialog" ).element( by.buttonText( "Delete" ) ).click();
-    $( ".ngdialog" ).element( by.buttonText( "Yes, Delete" ) ).click();
+    $( ".ngdialog" ).element( by.buttonText( "Confirm" ) ).click();
     if( pauseAfter !== false )
     {
         browser.sleep( 1000 );
