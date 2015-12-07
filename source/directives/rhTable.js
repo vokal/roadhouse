@@ -188,7 +188,7 @@ function ( $compile, $rootScope, ngDialog, alertify )
 
                 if( utils.runIfFunc( scope.definition.meta.canEdit ) !== false )
                 {
-                    thead.push( "<th></th>" );
+                    thead.push( "<th>{{ definition.meta.editHeading }}</th>" );
                     tbody.push( '<td><h6>Edit</h6><span><i data-ng-click="editClick( item )"'
                         + ' data-ng-if="!item.meta.deleted"'
                         + ' class="glyphicon glyphicon-edit"></span></i></td>' );
