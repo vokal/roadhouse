@@ -18,10 +18,16 @@ function ( $compile, $rootScope, ngDialog, alertify )
             list: "=rhList",
             update: "=rhOnUpdate",
             create: "=rhOnCreate",
-            delete: "=rhOnDelete"
+            delete: "=rhOnDelete",
+            loading: "=rhLoading"
         },
         link: function ( scope, element )
         {
+            if( scope.loading === undefined )
+            {
+                scope.loading = true;
+            }
+
             var getIndexById = function ( id )
             {
                 for( var i = 0; i < scope.list.length; i++ )
@@ -207,7 +213,11 @@ function ( $compile, $rootScope, ngDialog, alertify )
                     + tbody.join( "\n" ) + "</tr></tbody>"
                 + "</table>";
 
-                element.html( "<div>" + controls + table + "</div>" );
+                var loading = '<div data-ng-if="loading" class="rh-loading"><span>Loading...</span></div>';
+
+                var empty = '<div data-ng-if="!loading && !list.length" class="rh-empty"><span>No Records</span></div>';
+
+                element.html( "<div>" + controls + table + loading + empty + "</div>" );
                 $compile( element.contents() )( scope );
             };
 
