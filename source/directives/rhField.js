@@ -128,7 +128,8 @@ module.exports = [ "$compile", function ( $compile )
             + '<i class="glyphicon glyphicon-exclamation-sign"></i>'
             + "</span></div>";
 
-            var wrapper = '<div class="input-group-wrapper rh-' + getType() + '">'
+            var wrapper = '<div class="input-group-wrapper rh-' + getType()
+                + " " + ( scope.def.options ? "rh-options" : "" ) + '">'
                 + '<label data-ng-class="{ \'hidden-label\': def.labelType === \'placeholder\' }" '
                 + '  for="' + scope.def.key  + '"><span>' + ( scope.def.name || scope.def.key ) + "</span></label>"
                 + inputGroup

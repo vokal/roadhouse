@@ -89,6 +89,15 @@ utils.selectOnForm = function ( data )
     return utils;
 };
 
+utils.selectOptionOnForm = function ( data )
+{
+    Object.keys( data ).forEach( key =>
+    {
+        $( "#" + key ).element( by.cssContainingText( "option", data[ key ] ) ).click();
+    } );
+    return utils;
+};
+
 utils.saveForm = function ( pauseAfter )
 {
     $( ".ngdialog .btn-primary" ).click();
