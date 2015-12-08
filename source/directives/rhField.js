@@ -55,6 +55,8 @@ module.exports = [ "$compile", function ( $compile )
                 scope.model[ scope.def.key ] = scope.def.default;
             }
 
+            scope.startEmpty = !scope.model[ scope.def.key ];
+
             var inputAttrs = 'data-ng-model="' + modelName + '" '
                 + ( scope.def.validate ? 'rh-valid="def.validate"' : "" )
                 + ( scope.def.changed ? 'ng-change="def.changed()"' : "" )
@@ -66,7 +68,8 @@ module.exports = [ "$compile", function ( $compile )
                 + ( scope.def.uiMask ? 'ui-mask="' + scope.def.uiMask + '" ' : "" )
                 + ( pattern ? 'pattern="' + pattern + '" ' : "" )
                 + ( scope.def.required ? "required " : "" )
-                + 'ng-disabled="canEdit === false || canEdit === \'initial\' && initial"'
+                + 'ng-disabled="canEdit === false || canEdit === \'initial\' && initial'
+                + ' || canEdit === \'empty\' && !startEmpty "'
                 + ( scope.def.type === "date" ? "data-date-picker " : "" );
 
             var input = "<input "
