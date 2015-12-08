@@ -19,8 +19,12 @@ module.exports = [ "alertify",  "$location",
                             scope.currentPage = Number( response.data.currentPage );
                         }
                     },
-                    function ()
+                    function ( res )
                     {
+                        if( res.status === 404 )
+                        {
+                            return alertify.log( "The list is empty" );
+                        }
                         alertify.error( "Oops, there was an issue retrieving the list" );
                     } );
             }
