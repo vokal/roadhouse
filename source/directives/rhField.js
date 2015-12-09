@@ -2,7 +2,7 @@
 
 var utils = require( "../utils" );
 
-module.exports = [ "$compile", function ( $compile )
+module.exports = [ "$compile", "$filter", function ( $compile, $filter )
 {
     return {
         scope: {
@@ -46,6 +46,19 @@ module.exports = [ "$compile", function ( $compile )
                 return null;
             };
 
+            var getDirectAttrs = function ()
+            {
+                if( !scope.def.fieldAttrs )
+                {
+                    return "";
+                }
+
+                return Object.keys( scope.def.fieldAttrs ).map( function ( key )
+                {
+                    return $filter( "slugify" )( key ) + '="' + scope.def.fieldAttrs[ key ] + '"';
+                } ).join( " " );
+            };
+
             var pattern = getPattern();
             var modelName = "model." + scope.def.key;
             scope.canEdit = utils.runIfFunc( scope.def.canEdit );
@@ -70,7 +83,8 @@ module.exports = [ "$compile", function ( $compile )
                 + ( scope.def.required ? "required " : "" )
                 + 'ng-disabled="canEdit === false || canEdit === \'initial\' && initial'
                 + ' || canEdit === \'empty\' && !startEmpty "'
-                + ( scope.def.type === "date" ? "data-date-picker " : "" );
+                + ( scope.def.type === "date" ? "data-date-picker " : "" )
+                + " " + getDirectAttrs();
 
             var input = "<input "
                 + 'type="' + getType() + '" '
