@@ -110,13 +110,13 @@ describe( "Roadhouse Table", function ()
             .addForm()
             .sendToForm( { is: true } );
 
-        expect( $( ".rh-no.active" ).isPresent() ).toBe( false );
-        expect( $( ".rh-yes.active" ).isPresent() ).toBe( true );
+        expect( $( ".rh-false.active" ).isPresent() ).toBe( false );
+        expect( $( ".rh-true.active" ).isPresent() ).toBe( true );
 
         utils.sendToForm( { is: false } );
 
-        expect( $( ".rh-no.active" ).isPresent() ).toBe( true );
-        expect( $( ".rh-yes.active" ).isPresent() ).toBe( false );
+        expect( $( ".rh-false.active" ).isPresent() ).toBe( true );
+        expect( $( ".rh-true.active" ).isPresent() ).toBe( false );
     } );
 
     it( "should have no add button when canCreate is false", function ()
