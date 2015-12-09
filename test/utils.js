@@ -48,6 +48,15 @@ utils.editForm = function ( pauseAfter )
     return utils;
 };
 
+utils.clearOnForm = function ( keys )
+{
+    keys.forEach( key =>
+    {
+        element( by.model( "model." + key ) ).clear();
+    } );
+    return utils;
+};
+
 utils.sendToForm = function ( data )
 {
     Object.keys( data ).forEach( key =>
@@ -58,8 +67,33 @@ utils.sendToForm = function ( data )
         }
         else if( typeof( data[ key ] ) === "boolean" )
         {
-            element( by.model( "model." + key ) ).click();
+            if( data[ key ] )
+            {
+                $( ".rh-true" ).click();
+            }
+            else
+            {
+                $( ".rh-false" ).click();
+            }
         }
+    } );
+    return utils;
+};
+
+utils.selectOnForm = function ( data )
+{
+    Object.keys( data ).forEach( key =>
+    {
+        $( ".rh-" + data[ key ] ).click();
+    } );
+    return utils;
+};
+
+utils.selectOptionOnForm = function ( data )
+{
+    Object.keys( data ).forEach( key =>
+    {
+        $( "#" + key ).element( by.cssContainingText( "option", data[ key ] ) ).click();
     } );
     return utils;
 };
@@ -87,7 +121,7 @@ utils.cancelForm = function ( pauseAfter )
 utils.deleteForm = function ( pauseAfter )
 {
     $( ".ngdialog" ).element( by.buttonText( "Delete" ) ).click();
-    $( ".ngdialog" ).element( by.buttonText( "Yes, Delete" ) ).click();
+    $( ".ngdialog" ).element( by.buttonText( "Confirm" ) ).click();
     if( pauseAfter !== false )
     {
         browser.sleep( 1000 );

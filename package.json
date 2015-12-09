@@ -35,6 +35,7 @@
   "dependencies": {
     "alertify.js": "^1.0.6",
     "angular-datetime": "github:vokal/angular-datetime",
+    "angular-slugify": "^1.0.3",
     "ng-dialog": "^0.5.5"
   }
 }

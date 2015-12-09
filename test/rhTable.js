@@ -95,11 +95,28 @@ describe( "Roadhouse Table", function ()
 
         $$( ".rh-table tbody tr .glyphicon-edit" ).get( 2 ).click();
         $( ".ngdialog .initial" ).element( by.buttonText( "Delete" ) ).click();
-        $( ".ngdialog .delete-confirm" ).element( by.buttonText( "Yes, Delete" ) ).click();
+        $( ".ngdialog .delete-confirm" ).element( by.buttonText( "Confirm" ) ).click();
         browser.sleep( 1000 );
 
         utils.expectNgDialogIsNotPresent();
         expect( $$( ".rh-table tbody tr.deleted" ).count() ).toBe( 1 ); // 1 deleted row
+    } );
+
+    it( "should have a toggle for checkboxes", function ()
+    {
+        utils.set( "definition", { meta: {}, id: {}, is: { type: "checkbox" } } );
+
+        utils
+            .addForm()
+            .sendToForm( { is: true } );
+
+        expect( $( ".rh-false.active" ).isPresent() ).toBe( false );
+        expect( $( ".rh-true.active" ).isPresent() ).toBe( true );
+
+        utils.sendToForm( { is: false } );
+
+        expect( $( ".rh-false.active" ).isPresent() ).toBe( true );
+        expect( $( ".rh-true.active" ).isPresent() ).toBe( false );
     } );
 
     it( "should have no add button when canCreate is false", function ()

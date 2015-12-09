@@ -56,13 +56,14 @@ module.exports = [ "$compile", function ( $compile )
                     return def;
                 } );
 
-                var formName = "rh" + ( scope.definition.meta.title || "" ).replace( /[^\w\d]*/g, "" ) + "Form";
+                scope.formName = "rh" + ( scope.definition.meta.title || "" ).replace( /[^\w\d]*/g, "" ) + "Form";
                 scope.canDelete = scope.model.id && utils.runIfFunc( scope.definition.meta.canDelete ) !== false;
 
-                var form = '<form name="' + formName + '" class="rh-form" data-ng-submit="saveClick( ' + formName + ' )">'
+
+                var form = '<form name="{{ formName }}" class="rh-form" data-ng-submit="saveClick( ' + scope.formName + ' )">'
                 + "  <h3 data-ng-if='titleVisible !== false'>"
-                +   ( !scope.definition.id || scope.model.id ? "Edit " : "Add " )
-                +   ( scope.definition.meta.title || "" )
+                + '    {{ !definition.id || model.id ? "Edit " : "Add "}}'
+                + '    {{ definition.meta.title || "" }}'
                 + "  </h3>"
                 + '  <div ng-repeat="field in formFields" '
                 + '    rh-field rh-model="model"'
@@ -76,7 +77,7 @@ module.exports = [ "$compile", function ( $compile )
                 + '  <div class="form-controls clearfix delete-confirm" '
                 + '    data-ng-if="canDelete" data-ng-show="deletePending">'
                 + "    <strong>Do you really want to delete this?</strong>"
-                + '    <button type="button" class="btn btn-danger" data-ng-click="deleteClick()">Yes, Delete</button>'
+                + '    <button type="button" class="btn btn-danger" data-ng-click="deleteClick()">Confirm</button>'
                 + '    <button type="button" class="btn btn-default" data-ng-click="toggleDeletePending()">Cancel</button>'
                 + "  </div>"
                 + "</form>";

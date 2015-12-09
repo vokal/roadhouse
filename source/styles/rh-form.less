@@ -7,7 +7,7 @@
 .ngdialog-theme-default.rh-form {
 
     .ngdialog-content {
-        width: 800px;
+        width: 600px;
     }
 
     h2 {
@@ -17,17 +17,38 @@
     }
 
     .input-group-wrapper {
-        width: 48%;
-        margin: 0 1% 3% 0;
-        display: inline-block;
+        margin-bottom: 1.25rem;
         vertical-align: top;
 
-        .single-col & {
-            width: auto;
+        .two-col & {
+            width: 48%;
+            margin: 0 1% 3% 0;
+            display: inline-block;
         }
 
         [disabled] {
             color: @disabled-input-color;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            border-color: #CCC;
+            border-radius: 4px;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        &.rh-checkbox,
+        &.rh-select,
+        &.rh-options {
+            input {
+                display: none;
+
+                & + div + .input-group-addon {
+                    display: none;
+                }
+            }
         }
 
         .ng-invalid {
@@ -73,6 +94,27 @@
 
     .date-picker {
         z-index: 10;
+    }
+
+    [years-and-days] {
+        background: none transparent;
+        padding: 0;
+        border: none;
+
+        .input-group {
+            width: 45%;
+            margin-right: 5%;
+            float: left;
+
+            .input-group-addon {
+                background-color: #EEE;
+            }
+        }
+
+        & + .input-group-addon:last-child {
+            border-left: 1px solid #CCC;
+            border-radius: 4px;
+        }
     }
 }
 

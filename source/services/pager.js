@@ -6,10 +6,14 @@ module.exports = [ "alertify",  "$location",
         return {
             getPage: function ( scope, dataService, page )
             {
+                scope.loading = true;
+
                 dataService.getPage( page && page.index || Number( $location.search().rhcurrentpage ) || 1 )
                     .then( function ( response )
                     {
                         scope.list = response.data.results;
+                        scope.loading = false;
+
                         if( response.data.pageCount )
                         {
                             scope.pageCount = Number( response.data.pageCount );
@@ -19,8 +23,13 @@ module.exports = [ "alertify",  "$location",
                             scope.currentPage = Number( response.data.currentPage );
                         }
                     },
-                    function ()
+                    function ( res )
                     {
+                        scope.loading = false;
+                        if( res.status === 404 )
+                        {
+                            return alertify.log( "The list is empty" );
+                        }
                         alertify.error( "Oops, there was an issue retrieving the list" );
                     } );
             }

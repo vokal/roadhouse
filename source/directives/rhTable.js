@@ -18,10 +18,16 @@ function ( $compile, $rootScope, ngDialog, alertify )
             list: "=rhList",
             update: "=rhOnUpdate",
             create: "=rhOnCreate",
-            delete: "=rhOnDelete"
+            delete: "=rhOnDelete",
+            loading: "=rhLoading"
         },
         link: function ( scope, element )
         {
+            if( scope.loading === undefined )
+            {
+                scope.loading = true;
+            }
+
             var getIndexById = function ( id )
             {
                 for( var i = 0; i < scope.list.length; i++ )
@@ -74,7 +80,7 @@ function ( $compile, $rootScope, ngDialog, alertify )
                     scope.update( item )
                         .then( function ( response )
                         {
-                            var updatedItem = response.data;
+                            var updatedItem = scope.definition.meta.refreshOnSave !== false ? response.data : item;
                             updatedItem.meta = { updated: true };
                             scope.list.splice( getIndexById( item.id ), 1, updatedItem );
                             ngDialog.close();
@@ -129,7 +135,10 @@ function ( $compile, $rootScope, ngDialog, alertify )
                         + key + ' ? \'ok\' : \'unchecked\' }}"></i>' );
                 }
 
-                return wrapCell( "{{ item." + key + ( def.type === "date" ? " | date" : "" ) + " }}" );
+                return wrapCell( "{{ item." + key
+                    + ( def.tableFilter ? " | " + def.tableFilter :
+                        ( def.type === "date" ? " | date" : "" ) )
+                    + " }}" );
             };
 
             var render = function ()
@@ -185,7 +194,7 @@ function ( $compile, $rootScope, ngDialog, alertify )
 
                 if( utils.runIfFunc( scope.definition.meta.canEdit ) !== false )
                 {
-                    thead.push( "<th></th>" );
+                    thead.push( "<th>{{ definition.meta.editHeading }}</th>" );
                     tbody.push( '<td><h6>Edit</h6><span><i data-ng-click="editClick( item )"'
                         + ' data-ng-if="!item.meta.deleted"'
                         + ' class="glyphicon glyphicon-edit"></span></i></td>' );
@@ -204,7 +213,11 @@ function ( $compile, $rootScope, ngDialog, alertify )
                     + tbody.join( "\n" ) + "</tr></tbody>"
                 + "</table>";
 
-                element.html( controls + table );
+                var loading = '<div data-ng-if="loading" class="rh-loading"><span>Loading...</span></div>';
+
+                var empty = '<div data-ng-if="!loading && !list.length" class="rh-empty"><span>No Records</span></div>';
+
+                element.html( "<div>" + controls + table + loading + empty + "</div>" );
                 $compile( element.contents() )( scope );
             };
 
