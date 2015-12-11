@@ -15,6 +15,12 @@ exports.config = {
         includeStackTrace: true,
         defaultTimeoutInterval: 60000
     },
+    plugins: [ {
+        chromeA11YDevTools: {
+            treatWarningsAsFailures: true
+        },
+        path: "../../node_modules/protractor-axs"
+    } ],
     onPrepare: function ()
     {
         browser.driver.manage().window().maximize(); // use the full screen

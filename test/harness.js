@@ -7,6 +7,18 @@ require( "../source/index.js" );
 angular.module( "Harness", [ "roadhouse" ] )
 .run( [ "$rootScope", "$q", "Pager", function ( $rootScope, $q, Pager )
 {
+    $rootScope.dialogOpen = false;
+
+    $rootScope.$on( "ngDialog.opened", function ()
+    {
+        $rootScope.dialogOpen = true;
+    } );
+
+    $rootScope.$on( "ngDialog.closed", function ()
+    {
+        $rootScope.dialogOpen = false;
+    } );
+
     $rootScope.create = function ( item )
     {
         var defer = $q.defer();
