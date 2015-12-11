@@ -4,8 +4,9 @@ module.exports = [ "$compile", "$location", function ( $compile, $location )
 {
     var template = '<nav><ul class="pagination rh-paginator" data-ng-if="pages.length > 1">'
         + '<li data-ng-repeat="page in pages" data-ng-class="{ \'active\': page.index === currentPage }">'
-        + '<a data-ng-click="clickPage( page )"><span class="{{ page.css }}">{{ page.index }}</span></a>'
-        + "</li></ul></nav>";
+        + '<a data-ng-click="clickPage( page )">'
+        + '<span class="{{ page.css }}">{{ page.css ? "" : page.index }}</span>'
+        + "</a></li></ul></nav>";
 
     return {
         scope: {
@@ -48,7 +49,7 @@ module.exports = [ "$compile", "$location", function ( $compile, $location )
 
                 if( firstPage > 1 )
                 {
-                    scope.pages.push( createPage( i, "glyphicon glyphicon-chevron-left" ) );
+                    scope.pages.push( createPage( firstPage - 1, "glyphicon glyphicon-chevron-left" ) );
                 }
 
                 for( var i = firstPage; i < firstPage + linkCount && i <= scope.pageCount; i++ )
@@ -58,7 +59,7 @@ module.exports = [ "$compile", "$location", function ( $compile, $location )
 
                 if( scope.pageCount > firstPage + linkCount )
                 {
-                    scope.pages.push( createPage( i, "glyphicon glyphicon-chevron-right" ) );
+                    scope.pages.push( createPage( firstPage + linkCount, "glyphicon glyphicon-chevron-right" ) );
                 }
 
                 element.html( template );

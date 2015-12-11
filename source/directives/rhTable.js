@@ -107,9 +107,12 @@ function ( $compile, $rootScope, ngDialog, alertify )
                             scope.list.push( response.data );
                             ngDialog.close();
                         },
-                        function ()
+                        function ( res )
                         {
-                            alertify.error( "Oops, there was an issue creating the item" );
+                            if( res.suppressAlert !== true )
+                            {
+                                alertify.error( "Oops, there was an issue creating the item" );
+                            }
                         } );
                 };
                 openDialog( dialogScope );
