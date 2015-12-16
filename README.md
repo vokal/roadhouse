@@ -83,6 +83,7 @@ But all these options are available:
         href: String | Function that returns String,
         pattern: String of regular expression,
         placeholder: String,
+        fieldDirective: String,
         fieldAttrs: Object, additional attributes and values to add to `rh-field`
     },
     fieldN: { ... },
@@ -235,6 +236,14 @@ The default value for an empty field.
 *String* | Default: null
 
 `rh-field` can display a placeholder.
+
+* * *
+
+#### `fieldDirective`
+
+*String* | Default: null
+
+Add a directive to the `rh-field` by injecting this value directly into a `<div>`. For example, if you'd like to use the directive `angular-years-and-days` to edit the field value instead of a standard HTML input type and the data type should be seconds, use `fieldDirective: 'years-and-days data-as-seconds="true"'`. This will cause `rh-field` to be a `<div>` instead of an input type and will write that text directly into the tag.
 
 * * *
 
