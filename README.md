@@ -73,7 +73,7 @@ But all these options are available:
     field1: { // all other key names match the field name from the API
         name: String,
         canView: Boolean | Function that returns Boolean,
-        canEdit: "initial" | Boolean | Function that returns Boolean,
+        canEdit: "initial" | "empty" | Boolean | Function that returns Boolean,
         canViewList: Boolean,
         required: Boolean,
         type: String, any valid HTML input type,
@@ -153,17 +153,17 @@ The name is used for `rh-table` column headings and `rh-field` labels.
 
 #### `canView`
 
-*Boolean, Function that returns Boolean* | Default: true
+*Boolean, "edit", Function that returns Boolean* | Default: true
 
-Whether the field can be viewed. The most common reason this would be set to `false` is to hide ID fields.
+Whether the field can be viewed. The most common reason this would be set to `false` is to hide ID fields. When `"edit"` the field is only visible when editing, so not during creation. 
 
 * * *
 
 #### `canEdit`
 
-*"initial", Boolean, Function that returns Boolean* | Default: true
+*"initial", "empty", Boolean, Function that returns Boolean* | Default: true
 
-Whether the field can be edited. When set to `false` an `rh-field` will be disabled. When `"initial"` the field is only editable during `rh-form` record creation.
+Whether the field can be edited. When set to `false` an `rh-field` will be disabled. When `"initial"` the field is only editable during `rh-form` record creation. When `"empty"` the field is only editable if it starts out empty when editing.
 
 * * *
 

@@ -47,7 +47,10 @@ module.exports = [ "$compile", function ( $compile )
                 scope.formFields = keys.filter( function ( key )
                 {
                     var def = scope.definition[ key ];
-                    return key !== "meta" && def.canView !== false && def.type !== "link";
+                    return key !== "meta"
+                        && def.canView !== false
+                        && ( def.canView !== "edit" || scope.model.id )
+                        && def.type !== "link";
                 } )
                 .map( function ( key )
                 {
@@ -67,7 +70,7 @@ module.exports = [ "$compile", function ( $compile )
                 + "  </h3>"
                 + '  <div ng-repeat="field in formFields" '
                 + '    rh-field rh-model="model"'
-                + '    rh-definition="field" rh-initial="!!model.id" ></div>'
+                + '    rh-definition="field" rh-initial="!model.id" ></div>'
                 + '  <div class="form-controls clearfix initial" data-ng-hide="deletePending">'
                 + '    <button type="button" class="btn btn-default" data-ng-click="cancel()">Cancel</button>'
                 + '    <button type="button" class="btn btn-danger" data-ng-if="canDelete"'
