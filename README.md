@@ -73,7 +73,7 @@ But all these options are available:
     field1: { // all other key names match the field name from the API
         name: String,
         canView: Boolean | Function that returns Boolean,
-        canEdit: "initial" | Boolean | Function that returns Boolean,
+        canEdit: "initial" | "empty" | Boolean | Function that returns Boolean,
         canViewList: Boolean,
         required: Boolean,
         type: String, any valid HTML input type,
@@ -83,6 +83,7 @@ But all these options are available:
         href: String | Function that returns String,
         pattern: String of regular expression,
         placeholder: String,
+        fieldDirective: String,
         fieldAttrs: Object, additional attributes and values to add to `rh-field`
     },
     fieldN: { ... },
@@ -152,17 +153,17 @@ The name is used for `rh-table` column headings and `rh-field` labels.
 
 #### `canView`
 
-*Boolean, Function that returns Boolean* | Default: true
+*Boolean, "edit", Function that returns Boolean* | Default: true
 
-Whether the field can be viewed. The most common reason this would be set to `false` is to hide ID fields.
+Whether the field can be viewed. The most common reason this would be set to `false` is to hide ID fields. When `"edit"` the field is only visible when editing, so not during creation. 
 
 * * *
 
 #### `canEdit`
 
-*"initial", Boolean, Function that returns Boolean* | Default: true
+*"initial", "empty", Boolean, Function that returns Boolean* | Default: true
 
-Whether the field can be edited. When set to `false` an `rh-field` will be disabled. When `"initial"` the field is only editable during `rh-form` record creation.
+Whether the field can be edited. When set to `false` an `rh-field` will be disabled. When `"initial"` the field is only editable during `rh-form` record creation. When `"empty"` the field is only editable if it starts out empty when editing.
 
 * * *
 
@@ -235,6 +236,14 @@ The default value for an empty field.
 *String* | Default: null
 
 `rh-field` can display a placeholder.
+
+* * *
+
+#### `fieldDirective`
+
+*String* | Default: null
+
+Add a directive to the `rh-field` by injecting this value directly into a `<div>`. For example, if you'd like to use the directive `angular-years-and-days` to edit the field value instead of a standard HTML input type and the data type should be seconds, use `fieldDirective: 'years-and-days data-as-seconds="true"'`. This will cause `rh-field` to be a `<div>` instead of an input type and will write that text directly into the tag.
 
 * * *
 

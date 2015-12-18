@@ -63,6 +63,13 @@ module.exports = [ "$compile", "$filter", function ( $compile, $filter )
             var modelName = "model." + scope.def.key;
             scope.canEdit = utils.runIfFunc( scope.def.canEdit );
 
+            if( scope.initial && !scope.canEdit )
+            {
+                element.html( "" );
+                $compile( element.contents() )( scope );
+                return;
+            }
+
             if( scope.def.default && !scope.model[ scope.def.key ] )
             {
                 scope.model[ scope.def.key ] = scope.def.default;
@@ -81,7 +88,7 @@ module.exports = [ "$compile", "$filter", function ( $compile, $filter )
                 + ( scope.def.uiMask ? 'ui-mask="' + scope.def.uiMask + '" ' : "" )
                 + ( pattern ? 'pattern="' + pattern + '" ' : "" )
                 + ( scope.def.required ? "required " : "" )
-                + 'ng-disabled="canEdit === false || canEdit === \'initial\' && initial'
+                + 'ng-disabled="canEdit === false || canEdit === \'initial\' && !initial'
                 + ' || canEdit === \'empty\' && !startEmpty "'
                 + ( scope.def.type === "date" ? "data-date-picker " : "" )
                 + " " + getDirectAttrs();
