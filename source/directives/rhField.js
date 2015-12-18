@@ -63,7 +63,7 @@ module.exports = [ "$compile", "$filter", function ( $compile, $filter )
             var modelName = "model." + scope.def.key;
             scope.canEdit = utils.runIfFunc( scope.def.canEdit );
 
-            if( scope.initial && !scope.canEdit )
+            if( scope.initial && scope.canEdit === false )
             {
                 element.html( "" );
                 $compile( element.contents() )( scope );
