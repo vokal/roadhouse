@@ -5,8 +5,10 @@ require( "angular-mocks" );
 require( "../source/index.js" );
 
 angular.module( "Harness", [ "roadhouse" ] )
-.run( [ "$rootScope", "$q", "Pager", function ( $rootScope, $q, Pager )
+.run( [ "$rootScope", "$q", "Pager", "alertify", function ( $rootScope, $q, Pager, alertify )
 {
+    alertify.closeLogOnClick( true );
+
     $rootScope.dialogOpen = false;
 
     $rootScope.$on( "ngDialog.opened", function ()
@@ -52,6 +54,34 @@ angular.module( "Harness", [ "roadhouse" ] )
                     pageCount: 10,
                     currentPage: page.index
                 } } );
+                return defer.promise;
+            }
+        };
+
+        Pager.getPage( $rootScope, mockDataService, page.index );
+    };
+
+    $rootScope.get404List = function ( page )
+    {
+        var mockDataService = {
+            getPage: function ()
+            {
+                var defer = $q.defer();
+                defer.reject( { status: 404 } );
+                return defer.promise;
+            }
+        };
+
+        Pager.getPage( $rootScope, mockDataService, page.index );
+    };
+
+    $rootScope.get500List = function ( page )
+    {
+        var mockDataService = {
+            getPage: function ()
+            {
+                var defer = $q.defer();
+                defer.reject( { status: 500 } );
                 return defer.promise;
             }
         };

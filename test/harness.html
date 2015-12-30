@@ -28,10 +28,23 @@
                 rh-on-update="update"
                 rh-on-delete="delete"></div>
 
-            <div rh-paginator
+            <div class="normal"
+                rh-paginator
                 rh-paginator-page-count="pageCount"
                 rh-paginator-current-page="currentPage"
                 rh-paginator-on-page-selected="getList"></div>
+
+            <div class="p404"
+                rh-paginator
+                rh-paginator-page-count="pageCount"
+                rh-paginator-current-page="currentPage"
+                rh-paginator-on-page-selected="get404List"></div>
+
+            <div class="p500"
+                rh-paginator
+                rh-paginator-page-count="pageCount"
+                rh-paginator-current-page="currentPage"
+                rh-paginator-on-page-selected="get500List"></div>
 
             <div rh-form
                 rh-definition="validators.definition"
