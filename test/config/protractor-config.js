@@ -2,7 +2,7 @@ var specs = require( "./protractor-specs" );
 
 var config = {
     capabilities: {
-        "browserName": "chrome"
+        browserName: "chrome"
     },
     params: {}, // access through browser.params.KEY
     directConnect: true,
@@ -23,15 +23,14 @@ var config = {
     } ],
     onPrepare: function ()
     {
-        browser.driver.manage().window().maximize(); // use the full screen
+        browser.driver.manage().window().setSize( 1280, 1024 );
     }
 };
 
 if( process.env.TRAVIS )
 {
-    config.capabilities.chromeOptions = {
-        args: [ "--no-sandbox" ]
-    };
+    config.capabilities.browserName = "phantomjs";
+    config.directConnect = false;
 }
 
 exports.config = config;
