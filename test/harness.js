@@ -96,21 +96,20 @@ angular.module( "Harness", [ "roadhouse" ] )
     var valid = $q.defer();
     valid.resolve( true );
 
-    $rootScope.validators = {
-        model: {},
-        definition: {
-            meta: {},
-            a: {
-                validate: () => notValid.promise
-            },
-            b: {
-                validate: () => valid.promise
-            },
-            c: { key: "c" },
-            d: {
-                key: "d",
-                validate: { sameAsModel: { key: "c" } }
-            }
+    $rootScope.formModel = {};
+    $rootScope.formDefinition = {
+        meta: {},
+        a: {
+            validate: () => notValid.promise
+        },
+        b: {
+            validate: () => valid.promise
+        },
+        c: { key: "c" },
+        d: {
+            key: "d",
+            validate: { sameAsModel: { key: "c" } }
         }
     };
+
 } ] );

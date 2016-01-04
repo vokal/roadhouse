@@ -7,7 +7,7 @@ utils.set = function ( key, val )
 {
     browser.executeScript(
         "var scope = angular.element( document.body ).injector().get( '$rootScope' );"
-        + "scope['" + key + "'] = JSON.parse( '" + JSON.stringify( val ) + "' );"
+        + "scope['" + key + "'] = JSON.parse( '" + JSON.stringify( val ).replace( /"/g, "\\\"" ) + "' );"
         + "scope.$apply();" );
     return utils;
 };

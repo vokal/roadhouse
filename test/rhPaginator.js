@@ -60,15 +60,19 @@ describe( "Roadhouse Paginator", function ()
     it( "should handle 404 when selecting a page", function ()
     {
         $( ".p404 .rh-paginator li:nth-child(3)" ).click();
+        browser.sleep( 100 );
         expect( $( ".alertify-logs" ).getText() ).toBe( "The list is empty" );
         $( ".alertify-logs" ).click();
-        browser.sleep( 1000 );
+        browser.sleep( 1200 );
     } );
 
     it( "should handle 500 when selecting a page", function ()
     {
         $( ".p500 .rh-paginator li:nth-child(3)" ).click();
+        browser.sleep( 100 );
         expect( $( ".alertify-logs" ).getText() ).toBe( "Oops, there was an issue retrieving the list" );
+        $( ".alertify-logs" ).click();
+        browser.sleep( 1200 );
     } );
 
 } );
