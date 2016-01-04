@@ -1,6 +1,6 @@
 var specs = require( "./protractor-specs" );
 
-exports.config = {
+var config = {
     capabilities: {
         "browserName": "chrome"
     },
@@ -26,3 +26,12 @@ exports.config = {
         browser.driver.manage().window().maximize(); // use the full screen
     }
 };
+
+if( process.env.TRAVIS )
+{
+    config.capabilities.chromeOptions = {
+        args: [ "--no-sandbox" ]
+    };
+}
+
+exports.config = config;
