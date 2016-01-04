@@ -74,5 +74,4 @@ describe( "Roadhouse Field", function ()
         element( by.cssContainingText( ".field select option", "1" ) ).click();
     } );
 
-
 } );
