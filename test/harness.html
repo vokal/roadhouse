@@ -21,6 +21,9 @@
     <body>
 
         <div id="harness" ng-attr-aria-hidden="{{ dialogOpen }}">
+
+            <h1>Table</h1>
+
             <div rh-table
                 rh-list="list"
                 rh-definition="definition"
@@ -28,14 +31,42 @@
                 rh-on-update="update"
                 rh-on-delete="delete"></div>
 
-            <div rh-paginator
+
+            <h1>Paginators</h1>
+
+            <div class="normal"
+                rh-paginator
                 rh-paginator-page-count="pageCount"
                 rh-paginator-current-page="currentPage"
                 rh-paginator-on-page-selected="getList"></div>
 
+            <div class="p404"
+                rh-paginator
+                rh-paginator-page-count="pageCount"
+                rh-paginator-current-page="currentPage"
+                rh-paginator-on-page-selected="get404List"></div>
+
+            <div class="p500"
+                rh-paginator
+                rh-paginator-page-count="pageCount"
+                rh-paginator-current-page="currentPage"
+                rh-paginator-on-page-selected="get500List"></div>
+
+
+            <h1>Form</h1>
+
             <div rh-form
-                rh-definition="validators.definition"
-                rh-model="validators.model"></div>
+                rh-definition="formDefinition"
+                rh-model="formModel"></div>
+
+
+            <h1>Field</h1>
+
+            <div class="field"
+                rh-field
+                rh-definition="fieldDefinition"
+                rh-model="fieldModel"
+                rh-initial="fieldInitial"></div>
 
         </div>
 

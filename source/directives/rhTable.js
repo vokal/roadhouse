@@ -46,7 +46,7 @@ function ( $compile, $rootScope, ngDialog, alertify )
 
                 dialogScope.cancel = function ()
                 {
-                    ngDialog.close();
+                    ngDialog.closeAll();
                 };
 
                 dialogScope.delete = function ( item )
@@ -55,7 +55,7 @@ function ( $compile, $rootScope, ngDialog, alertify )
                         .then( function ()
                         {
                             scope.list[ getIndexById( item.id ) ].meta = { deleted: true };
-                            ngDialog.close();
+                            ngDialog.closeAll();
                         },
                         function ()
                         {
@@ -83,7 +83,7 @@ function ( $compile, $rootScope, ngDialog, alertify )
                             var updatedItem = scope.definition.meta.refreshOnSave !== false ? response.data : item;
                             updatedItem.meta = { updated: true };
                             scope.list.splice( getIndexById( item.id ), 1, updatedItem );
-                            ngDialog.close();
+                            ngDialog.closeAll();
                         },
                         function ()
                         {
@@ -105,7 +105,7 @@ function ( $compile, $rootScope, ngDialog, alertify )
                             //TODO: this is a little weird, should really reload the list in most cases
                             response.data.meta = { updated: true };
                             scope.list.push( response.data );
-                            ngDialog.close();
+                            ngDialog.closeAll();
                         },
                         function ( res )
                         {
