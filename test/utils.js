@@ -84,7 +84,7 @@ utils.selectOnForm = function ( data )
 {
     Object.keys( data ).forEach( key =>
     {
-        $( ".rh-" + data[ key ] ).click();
+        $( ".btn.rh-" + data[ key ] ).click();
     } );
     return utils;
 };
