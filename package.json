@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "name": "roadhouse",
   "description": "Angular Admin CRUD Tools",
   "license": "MIT",
@@ -31,11 +31,11 @@
     "grunt-istanbul": "^0.6.1",
     "grunt-protractor-coverage": "^0.2.15",
     "protractor": "^2.5.1",
-    "protractor-axs": "github:vokal/protractor-axs"
+    "protractor-axs": "^1.0.0"
   },
   "dependencies": {
     "alertify.js": "^1.0.6",
-    "angular-datetime": "github:vokal/angular-datetime",
+    "angular-datetime": "github:vokal/angular-datetime#v2.1.5",
     "angular-slugify": "^1.0.3",
     "ng-dialog": "^0.5.5"
   }
