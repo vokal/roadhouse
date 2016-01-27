@@ -72,9 +72,9 @@ module.exports = [ "$compile", function ( $compile )
                 + '    rh-field rh-model="model"'
                 + '    rh-definition="field" rh-initial="!model.id" ></div>'
                 + '  <div class="form-controls clearfix initial" data-ng-hide="deletePending">'
-                + '    <button type="button" class="btn btn-default" data-ng-click="cancel()">Cancel</button>'
-                + '    <button type="button" class="btn btn-danger" data-ng-if="canDelete"'
+                + '    <button type="button" class="btn btn-danger pull-left" data-ng-if="canDelete"'
                 + '      data-ng-click="toggleDeletePending()">Delete</button>'
+                + '    <button type="button" class="btn btn-default" data-ng-click="cancel()">Cancel</button>'
                 + '    <button id="add-item-submit" type="submit" class="btn btn-primary">Save</button>'
                 + "  </div>"
                 + '  <div class="form-controls clearfix delete-confirm" '
