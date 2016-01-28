@@ -68,7 +68,8 @@ But all these options are available:
         canCreate: Boolean | Function that returns Boolean | Object { max: Number },
         canEdit: Boolean | Function that returns Boolean,
         canDelete: Boolean | Function that returns Boolean,
-        editHeading: String
+        editHeading: String,
+        deleteHeading: String
     },
     field1: { // all other key names match the field name from the API
         name: String,
@@ -135,9 +136,17 @@ Whether a record can be deleted.
 
 #### `editHeading`
 
-*String* | Default: "Edit"
+*String* | Default: ""
 
 The heading of the edit column in `rh-table` when it is visible.
+
+* * *
+
+#### `deleteHeading`
+
+*String* | Default: ""
+
+The heading of the delete column in `rh-table` when it is visible.
 
 * * *
 
@@ -155,7 +164,7 @@ The name is used for `rh-table` column headings and `rh-field` labels.
 
 *Boolean, "edit", Function that returns Boolean* | Default: true
 
-Whether the field can be viewed. The most common reason this would be set to `false` is to hide ID fields. When `"edit"` the field is only visible when editing, so not during creation. 
+Whether the field can be viewed. The most common reason this would be set to `false` is to hide ID fields. When `"edit"` the field is only visible when editing, so not during creation.
 
 * * *
 

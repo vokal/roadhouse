@@ -12,6 +12,12 @@ function ( $compile, $rootScope, ngDialog, alertify )
         + ' data-rh-on-cancel="cancel"'
         + ' data-rh-on-delete="delete"></div>';
 
+    var confirmDeleteTemplate =
+        '<div class="rh-form"><h3>Do you really want to delete this?</h3>'
+        + '<div class="form-controls clearfix">'
+        + '<button type="button" class="btn btn-danger" ng-click="delete()">Confirm</button>'
+        + '<button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button></div></div>';
+
     return {
         scope: {
             definition: "=rhDefinition",
@@ -40,6 +46,20 @@ function ( $compile, $rootScope, ngDialog, alertify )
                 return null;
             };
 
+            var deleteItem = function ( item )
+            {
+                scope.delete( item )
+                    .then( function ()
+                    {
+                        scope.list[ getIndexById( item.id ) ].meta = { deleted: true };
+                        ngDialog.closeAll();
+                    },
+                    function ()
+                    {
+                        alertify.error( "Oops, There was an issue deleting the item" );
+                    } );
+            };
+
             var openDialog = function ( dialogScope )
             {
                 dialogScope.definition = scope.definition;
@@ -49,19 +69,7 @@ function ( $compile, $rootScope, ngDialog, alertify )
                     ngDialog.closeAll();
                 };
 
-                dialogScope.delete = function ( item )
-                {
-                    scope.delete( item )
-                        .then( function ()
-                        {
-                            scope.list[ getIndexById( item.id ) ].meta = { deleted: true };
-                            ngDialog.closeAll();
-                        },
-                        function ()
-                        {
-                            alertify.error( "Oops, There was an issue deleting the item" );
-                        } );
-                };
+                dialogScope.delete = deleteItem;
 
                 ngDialog.open( {
                     plain: true,
@@ -91,6 +99,28 @@ function ( $compile, $rootScope, ngDialog, alertify )
                         } );
                 };
                 openDialog( dialogScope );
+            };
+
+            scope.deleteClick = function ( item )
+            {
+                var dialogScope = scope.$new();
+
+                dialogScope.cancel = function ()
+                {
+                    ngDialog.closeAll();
+                };
+
+                dialogScope.delete = function ()
+                {
+                    deleteItem( item );
+                };
+
+                ngDialog.open( {
+                    plain: true,
+                    template: confirmDeleteTemplate,
+                    className: "ngdialog-theme-default",
+                    scope: dialogScope
+                } );
             };
 
             scope.addClick = function ()
@@ -201,6 +231,14 @@ function ( $compile, $rootScope, ngDialog, alertify )
                     tbody.push( '<td><h6>Edit</h6><span><i data-ng-click="editClick( item )"'
                         + ' data-ng-if="!item.meta.deleted"'
                         + ' class="glyphicon glyphicon-edit"></span></i></td>' );
+                }
+
+                if( utils.runIfFunc( scope.definition.meta.canDelete ) !== false )
+                {
+                    thead.push( "<th>{{ definition.meta.deleteHeading }}</th>" );
+                    tbody.push( '<td><h6>Delete</h6><span><i data-ng-click="deleteClick( item )"'
+                        + ' data-ng-if="!item.meta.deleted"'
+                        + ' class="glyphicon glyphicon-trash"></span></i></td>' );
                 }
 
                 var controls = '<div class="table-controls form-inline clearfix"'
