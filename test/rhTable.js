@@ -33,7 +33,7 @@ describe( "Roadhouse Table", function ()
     {
         utils.set( "list", [ { name: "one", id: 1 }, { name: "two", id: 2 } ] );
 
-        expect( $$( ".rh-table thead th" ).count() ).toBe( 3 ); // 3 columns
+        expect( $$( ".rh-table thead th" ).count() ).toBe( 4 ); // 4 columns
         expect( $$( ".rh-table thead tr" ).count() ).toBe( 1 ); // 1 header row
         expect( $$( ".rh-table tbody tr" ).count() ).toBe( 2 ); // 2 body rows
         expect( $$( ".rh-table tbody tr:first-child .glyphicon-edit" ).count() ).toBe( 1 ); // edit button
@@ -43,14 +43,25 @@ describe( "Roadhouse Table", function ()
     it( "should have non-view columns", function ()
     {
         utils.set( "definition", { meta: {}, id: {}, name: {} } );
-        expect( $$( ".rh-table thead th" ).count() ).toBe( 3 ); // 3 columns
+        expect( $$( ".rh-table thead th" ).count() ).toBe( 4 ); // 4 columns
 
         utils.set( "definition", { meta: {}, id: { canViewList: false }, name: {} } );
+        expect( $$( ".rh-table thead th" ).count() ).toBe( 3 ); // 3 columns
+    } );
+
+    it( "should hide Delete column when item can't be deleted", function ()
+    {
+        utils.set( "definition", { meta: {}, id: {} } );
+        expect( $$( ".rh-table thead th" ).count() ).toBe( 3 ); // 3 columns
+
+        utils.set( "definition", { meta: { canDelete: false }, id: {} } );
         expect( $$( ".rh-table thead th" ).count() ).toBe( 2 ); // 2 columns
     } );
 
     it( "should be able to open Add an item", function ()
     {
+        utils.set( "definition", { meta: {}, id: { canViewList: false }, name: {} } );
+
         utils
             .expectNgDialogIsNotPresent()
             .addForm()
@@ -88,7 +99,7 @@ describe( "Roadhouse Table", function ()
         expect( $$( ".rh-table tbody tr.updated" ).count() ).toBe( 2 ); // 2 updated rows
     } );
 
-    it( "should delete an item", function ()
+    it( "should delete an item through edit dialog", function ()
     {
         expect( $$( ".rh-table tbody tr.deleted" ).count() ).toBe( 0 ); // no deleted rows
         expect( $( ".ngdialog .delete-confirm" ).isPresent() ).toBe( false );
@@ -96,6 +107,27 @@ describe( "Roadhouse Table", function ()
         $$( ".rh-table tbody tr .glyphicon-edit" ).get( 2 ).click();
         $( ".ngdialog .initial" ).element( by.buttonText( "Delete" ) ).click();
         $( ".ngdialog .delete-confirm" ).element( by.buttonText( "Confirm" ) ).click();
+        browser.sleep( 1000 );
+
+        utils.expectNgDialogIsNotPresent();
+        expect( $$( ".rh-table tbody tr.deleted" ).count() ).toBe( 1 ); // 1 deleted row
+    } );
+
+    it( "should delete an item through trash column", function ()
+    {
+        utils.set( "definition", { meta: {}, id: {}, name: {} } );
+        utils.set( "list", [ { name: "one", id: 1 }, { name: "two", id: 2 } ] );
+        expect( $$( ".rh-table tbody tr.deleted" ).count() ).toBe( 0 ); // no deleted rows
+
+        $$( ".rh-table tbody tr .glyphicon-trash" ).get( 1 ).click();
+        utils.expectNgDialogIsPresent();
+
+        $( ".ngdialog" ).element( by.buttonText( "Cancel" ) ).click();
+        browser.sleep( 1000 );
+        utils.expectNgDialogIsNotPresent();
+
+        $$( ".rh-table tbody tr .glyphicon-trash" ).get( 1 ).click();
+        $( ".ngdialog" ).element( by.buttonText( "Confirm" ) ).click();
         browser.sleep( 1000 );
 
         utils.expectNgDialogIsNotPresent();
@@ -140,9 +172,10 @@ describe( "Roadhouse Table", function ()
 
     it( "should draw checkbox columns", function ()
     {
+        utils.set( "list", [ { name: "one", id: 1 }, { name: "two", id: 2 } ] );
         expect( $$( ".rh-table .glyphicon-unchecked" ).count() ).toBe( 0 );
         utils.set( "definition", { meta: {}, id: {}, checkbox: { type: "checkbox" } } );
-        expect( $$( ".rh-table .glyphicon-unchecked" ).count() ).toBe( 3 );
+        expect( $$( ".rh-table .glyphicon-unchecked" ).count() ).toBe( 2 );
     } );
 
     it( "should draw date columns", function ()
