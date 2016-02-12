@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "1.1.1",
   "name": "roadhouse",
   "description": "Angular Admin CRUD Tools",
   "license": "MIT",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "alertify.js": "^1.0.6",
-    "angular-datetime": "github:vokal/angular-datetime#v2.1.5",
+    "angular-datetime": "^3.0.2",
     "angular-slugify": "^1.0.3",
     "ng-dialog": "^0.5.5"
   }
