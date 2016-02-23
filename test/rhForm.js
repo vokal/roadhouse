@@ -11,6 +11,11 @@ describe( "Roadhouse Form", function ()
         expect( $( "#a" ).isPresent() ).toBe( true );
     } );
 
+    it( "should not render field if not canView", function ()
+    {
+        expect( $( "#e" ).isPresent() ).toBe( false );
+    } );
+
     it( "should not render when there is not a definition", function ()
     {
         utils.set( "formDefinition", "not an object" );
