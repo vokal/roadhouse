@@ -109,7 +109,8 @@ angular.module( "Harness", [ "roadhouse" ] )
         d: {
             key: "d",
             validate: { sameAsModel: { key: "c" } }
-        }
+        },
+        e: { canView: false, "default": "val" }
     };
 
 } ] );

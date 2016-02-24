@@ -44,6 +44,20 @@ module.exports = [ "$compile", function ( $compile )
                     }
                 };
 
+                keys.forEach( function ( key )
+                {
+                    var def = scope.definition[ key ];
+                    if( key !== "meta"
+                        && def.canView === false
+                        && !scope.model.id
+                        && def.type !== "link"
+                        && def.default
+                        && !scope.model[ key ] )
+                        {
+                            scope.model[ key ] = def.default;
+                        }
+                } );
+
                 scope.formFields = keys.filter( function ( key )
                 {
                     var def = scope.definition[ key ];

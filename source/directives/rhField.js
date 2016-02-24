@@ -64,15 +64,17 @@ module.exports = [ "$compile", "$filter", function ( $compile, $filter )
                 var pattern = getPattern();
                 var modelName = "model." + scope.def.key;
                 scope.canEdit = utils.runIfFunc( scope.def.canEdit );
+                scope.canView = utils.runIfFunc( scope.def.canView );
 
-                if( scope.initial && scope.canEdit === false )
+                if( scope.canView === false || scope.initial && scope.canEdit === false )
                 {
                     element.html( "" );
                     $compile( element.contents() )( scope );
                     return;
                 }
 
-                if( scope.def.default && !scope.model[ scope.def.key ] )
+                if( scope.def.default &&
+                    ( scope.model[ scope.def.key ] === undefined || scope.model[ scope.def.key ] === null ) )
                 {
                     scope.model[ scope.def.key ] = scope.def.default;
                 }
