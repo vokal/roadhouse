@@ -167,8 +167,18 @@ module.exports = [ "$compile", "$filter", function ( $compile, $filter )
             };
 
             render();
-            scope.$watch( "def", ( newVal, oldVal ) => newVal !== oldVal ? render() : null );
-            scope.$watch( "initial", ( newVal, oldVal ) => newVal !== oldVal ? render() : null );
+            scope.$watch( "def",  function ( newVal, oldVal ) {
+                if( newVal !== oldVal )
+                {
+                    render();
+                }
+            } );
+            scope.$watch( "initial",  function ( newVal, oldVal ) {
+                if( newVal !== oldVal )
+                {
+                    render();
+                }
+            } );
         }
     };
 } ];
