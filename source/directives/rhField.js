@@ -7,16 +7,15 @@ module.exports = [ "$compile", "$filter", function ( $compile, $filter )
     return {
         scope: {
             def: "=rhDefinition",
-            model: "=rhModel",
-            initial: "=rhInitial"
+            model: "=rhModel"
         },
-        link: function ( scope, element )
+        link: function ( scope, element, attrs )
         {
             var render = function ()
             {
                 scope.def = scope.def || {};
                 scope.model = scope.model || {};
-                scope.initial = !!scope.initial;
+                scope.initial = !!attrs.rhInitial;
 
                 var getType = function ()
                 {
@@ -168,8 +167,8 @@ module.exports = [ "$compile", "$filter", function ( $compile, $filter )
             };
 
             render();
-            scope.$watch( "def", render );
-            scope.$watch( "initial", render );
+            scope.$watch( "def", ( newVal, oldVal ) => newVal !== oldVal ? render() : null );
+            scope.$watch( "initial", ( newVal, oldVal ) => newVal !== oldVal ? render() : null );
         }
     };
 } ];

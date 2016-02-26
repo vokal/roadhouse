@@ -103,8 +103,8 @@ module.exports = [ "$compile", function ( $compile )
                 $compile( element.contents() )( scope );
             };
 
-            scope.$watch( "definition", render );
-            scope.$watch( "model", render );
+            scope.$watch( "definition", ( newVal, oldVal ) => newVal !== oldVal ? render() : null );
+            scope.$watch( "model", ( newVal, oldVal ) => newVal !== oldVal ? render() : null );
             render();
         }
     };
