@@ -80,6 +80,9 @@ module.exports = [ "$compile", "$filter", function ( $compile, $filter )
 
                 scope.startEmpty = !scope.model[ scope.def.key ];
 
+                var ngDisabled = 'ng-disabled="canEdit === false || canEdit === \'initial\' && !initial'
+                    + ' || canEdit === \'not-initial\' && initial || canEdit === \'empty\' && !startEmpty "';
+
                 var inputAttrs = 'data-ng-model="' + modelName + '" '
                     + ( scope.def.validate ? 'rh-valid="def.validate"' : "" )
                     + ( scope.def.changed ? 'ng-change="def.changed()"' : "" )
@@ -91,8 +94,7 @@ module.exports = [ "$compile", "$filter", function ( $compile, $filter )
                     + ( scope.def.uiMask ? 'ui-mask="' + scope.def.uiMask + '" ' : "" )
                     + ( pattern ? 'pattern="' + pattern + '" ' : "" )
                     + ( scope.def.required ? "required " : "" )
-                    + 'ng-disabled="canEdit === false || canEdit === \'initial\' && !initial'
-                    + ' || canEdit === \'empty\' && !startEmpty "'
+                    + ngDisabled
                     + ( scope.def.type === "date" ? "data-date-picker " : "" )
                     + " " + getDirectAttrs();
 
@@ -138,6 +140,7 @@ module.exports = [ "$compile", "$filter", function ( $compile, $filter )
                         + '  <button data-ng-repeat="option in def.options" type="button"'
                         + '     class="btn btn-default rh-{{ option.value === true ? \'true\' : option.value === false ? \'false\' : option.value | slugify }}"'
                         + '     data-ng-click="' + modelName + ' = option.value"'
+                        + ngDisabled
                         + '     data-ng-class="{ \'active\': ' + modelName + ' === option.value }">{{ option.name }}</button>'
                         + "</div>";
                     }
@@ -174,6 +177,12 @@ module.exports = [ "$compile", "$filter", function ( $compile, $filter )
                 }
             } );
             scope.$watch( "initial",  function ( newVal, oldVal ) {
+                if( newVal !== oldVal )
+                {
+                    render();
+                }
+            } );
+            scope.$watch( "not-initial",  function ( newVal, oldVal ) {
                 if( newVal !== oldVal )
                 {
                     render();

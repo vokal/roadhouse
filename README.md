@@ -74,7 +74,7 @@ But all these options are available:
     field1: { // all other key names match the field name from the API
         name: String,
         canView: Boolean | Function that returns Boolean,
-        canEdit: "initial" | "empty" | Boolean | Function that returns Boolean,
+        canEdit: "initial" | "not-initial" | "empty" | Boolean | Function that returns Boolean,
         canViewList: Boolean,
         required: Boolean,
         type: String, any valid HTML input type,
@@ -172,7 +172,7 @@ Whether the field can be viewed. The most common reason this would be set to `fa
 
 *"initial", "empty", Boolean, Function that returns Boolean* | Default: true
 
-Whether the field can be edited. When set to `false` an `rh-field` will be disabled. When `"initial"` the field is only editable during `rh-form` record creation. When `"empty"` the field is only editable if it starts out empty when editing.
+Whether the field can be edited. When set to `false` an `rh-field` will be disabled. When `"initial"` the field is only editable during `rh-form` record creation, and the opposite for `"not-initial"`. When `"empty"` the field is only editable if it starts out empty when editing.
 
 * * *
 
