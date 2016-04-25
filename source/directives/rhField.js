@@ -7,7 +7,8 @@ module.exports = [ "$compile", "$filter", function ( $compile, $filter )
     return {
         scope: {
             def: "=rhDefinition",
-            model: "=rhModel"
+            model: "=rhModel",
+            initial: "=rhInitial"
         },
         link: function ( scope, element, attrs )
         {
@@ -15,7 +16,7 @@ module.exports = [ "$compile", "$filter", function ( $compile, $filter )
             {
                 scope.def = scope.def || {};
                 scope.model = scope.model || {};
-                scope.initial = !!attrs.rhInitial;
+                scope.initial = !!scope.initial;
 
                 var getType = function ()
                 {
@@ -140,7 +141,7 @@ module.exports = [ "$compile", "$filter", function ( $compile, $filter )
                         + '  <button data-ng-repeat="option in def.options" type="button"'
                         + '     class="btn btn-default rh-{{ option.value === true ? \'true\' : option.value === false ? \'false\' : option.value | slugify }}"'
                         + '     data-ng-click="' + modelName + ' = option.value"'
-                        + ngDisabled
+                        + "     " + ngDisabled
                         + '     data-ng-class="{ \'active\': ' + modelName + ' === option.value }">{{ option.name }}</button>'
                         + "</div>";
                     }
@@ -177,12 +178,6 @@ module.exports = [ "$compile", "$filter", function ( $compile, $filter )
                 }
             } );
             scope.$watch( "initial",  function ( newVal, oldVal ) {
-                if( newVal !== oldVal )
-                {
-                    render();
-                }
-            } );
-            scope.$watch( "not-initial",  function ( newVal, oldVal ) {
                 if( newVal !== oldVal )
                 {
                     render();
