@@ -8,7 +8,7 @@ module.exports = [ "$compile", "$filter", function ( $compile, $filter )
         scope: {
             def: "=rhDefinition",
             model: "=rhModel",
-            initial: "=rhInitial"
+            initial: "=?rhInitial"
         },
         link: function ( scope, element, attrs )
         {
