@@ -11,7 +11,8 @@ module.exports = [ "$compile", function ( $compile )
             delete: "=rhOnDelete",
             cancel: "=rhOnCancel",
             model: "=rhModel",
-            titleVisible: "=rhTitleVisible"
+            titleVisible: "=rhTitleVisible",
+            showDelete: "=?rhHideDelete"
         },
         link: function ( scope, element )
         {
@@ -74,7 +75,11 @@ module.exports = [ "$compile", function ( $compile )
                 } );
 
                 scope.formName = "rh" + ( scope.definition.meta.title || "" ).replace( /[^\w\d]*/g, "" ) + "Form";
-                scope.canDelete = scope.model.id && utils.runIfFunc( scope.definition.meta.canDelete ) !== false;
+                scope.canDelete = Boolean(
+                  utils.runIfFunc( scope.definition.meta.showDelete ) !== false &&
+                  scope.model.id &&
+                  utils.runIfFunc( scope.definition.meta.canDelete ) !== false
+                );
 
 
                 var form = '<form name="{{ formName }}" class="rh-form" data-ng-submit="saveClick( ' + scope.formName + ' )">'
