@@ -10,10 +10,11 @@ function ( $compile, $rootScope, ngDialog, alertify )
         + ' data-rh-model="item"'
         + ' data-rh-on-save="save"'
         + ' data-rh-on-cancel="cancel"'
+        + ' data-rh-show-delete="showDelete"'
         + ' data-rh-on-delete="delete"></div>';
 
     var confirmDeleteTemplate =
-        '<div class="rh-form"><h3>Do you really want to delete this?</h3>'
+        '<div class="rh-form roadhouse-dialog-delete"><h3>Do you really want to delete this?</h3>'
         + '<div class="form-controls clearfix">'
         + '<button type="button" class="btn btn-danger" ng-click="delete()">Confirm</button>'
         + '<button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button></div></div>';
@@ -25,7 +26,10 @@ function ( $compile, $rootScope, ngDialog, alertify )
             update: "=rhOnUpdate",
             create: "=rhOnCreate",
             delete: "=rhOnDelete",
-            loading: "=rhLoading"
+            loading: "=rhLoading",
+            showEditDelete: "=?rhHideEditDelete",
+            canEditItem: "=?rhCanEditItem",
+            canDeleteItem: "=?rhCanDeleteItem",
         },
         link: function ( scope, element )
         {
@@ -33,6 +37,9 @@ function ( $compile, $rootScope, ngDialog, alertify )
             {
                 scope.loading = true;
             }
+
+            scope.canEditItem = angular.isFunction(scope.canEditItem) ? scope.canEditItem : function() { return true };
+            scope.canDeleteItem = angular.isFunction(scope.canDeleteItem) ? scope.canDeleteItem : function() { return true };
 
             var getIndexById = function ( id )
             {
@@ -63,6 +70,7 @@ function ( $compile, $rootScope, ngDialog, alertify )
             var openDialog = function ( dialogScope )
             {
                 dialogScope.definition = scope.definition;
+                dialogScope.showDelete = scope.showEditDelete;
 
                 dialogScope.cancel = function ()
                 {
@@ -228,17 +236,19 @@ function ( $compile, $rootScope, ngDialog, alertify )
                 if( utils.runIfFunc( scope.definition.meta.canEdit ) !== false )
                 {
                     thead.push( "<th>{{ definition.meta.editHeading }}</th>" );
-                    tbody.push( '<td><h6>Edit</h6><span><i data-ng-click="editClick( item )"'
+                  tbody.push( '<td><div data-ng-if="canEditItem( item )">'
+                        + '<h6>Edit</h6><span><i data-ng-click="editClick( item )"'
                         + ' data-ng-if="!item.meta.deleted"'
-                        + ' class="glyphicon glyphicon-edit"></span></i></td>' );
+                        + ' class="glyphicon glyphicon-edit"></span></i></div></td>' );
                 }
 
                 if( utils.runIfFunc( scope.definition.meta.canDelete ) !== false )
                 {
                     thead.push( "<th>{{ definition.meta.deleteHeading }}</th>" );
-                    tbody.push( '<td><h6>Delete</h6><span><i data-ng-click="deleteClick( item )"'
+                  tbody.push( '<td><div data-ng-if="canDeleteItem( item )">'
+                        + '<h6>Delete</h6><span><i data-ng-click="deleteClick( item )"'
                         + ' data-ng-if="!item.meta.deleted"'
-                        + ' class="glyphicon glyphicon-trash"></span></i></td>' );
+                        + ' class="glyphicon glyphicon-trash"></span></i></div></td>' );
                 }
 
                 var controls = '<div class="table-controls form-inline clearfix"'
@@ -249,7 +259,7 @@ function ( $compile, $rootScope, ngDialog, alertify )
 
                 var table = '<table class="rh-table">'
                 + "  <thead><tr>" + thead.join( "\n" ) + "</tr></thead>"
-                + '  <tbody><tr data-ng-repeat="item in list" '
+                + '  <tbody><tr data-table-item-index="{{item.id||key}}" data-ng-repeat="(key, item) in list" '
                 + '  data-ng-class="{ \'deleted\': item.meta.deleted, \'updated\': item.meta.updated }">'
                     + tbody.join( "\n" ) + "</tr></tbody>"
                 + "</table>";
