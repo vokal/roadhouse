@@ -68,8 +68,6 @@ But all these options are available:
         canCreate: Boolean | Function that returns Boolean | Object { max: Number },
         canEdit: Boolean | Function that returns Boolean,
         canDelete: Boolean | Function that returns Boolean,
-        showDelete: [FORM ONLY] Boolean | Function that returns Boolean,
-        showEditDelete: [TABLE ONLY] Boolean,
         editHeading: String,
         deleteHeading: String
     },
@@ -180,19 +178,21 @@ Whether the field can be edited. When set to `false` an `rh-field` will be disab
 
 #### `showDelete`
 
-*"Optional" Boolean* | Default: true
+*[Optional] "initial", "empty", Boolean, Function that returns Boolean* | Default: true
 
-**[Form Directive Only]** Optional boolean switch for hiding delete button in the
-form dialog.
+**[Form Directive Only]** Optional boolean or callback function switch for hiding
+delete button in the form dialog. For callback function scope.model is provided
+as argument.
 
 * * *
 
 #### `showEditDelete`
 
-*"Optional" Boolean* | Default: false
+*[Optional] "initial", "empty", Boolean, Function that returns Boolean* | Default: true
 
-**[Table Directive Only]** Optional boolean switch for hiding delete button in the
-edit dialog.
+**[Table Directive Only]** Optional boolean switch or callback function  for
+hiding delete button in the edit dialog. For callback function the corresponding
+table row item is provided as argument.
 
 * * *
 
@@ -312,7 +312,7 @@ Each of the directives in Roadhouse can be used individually, but to create a ty
     rh-on-create="list.create"
     rh-on-update="list.update"
     rh-on-delete="list.delete"
-    rh-hide-edit-delete="list.hideEditDelete"
+    rh-show-edit-delete="list.hideEditDelete"
     rh-can-edit-item="list.canEditItem"
     rh-can-delete-item="list.canDeleteItem"
     rh-loading="list.loading"></div>
@@ -330,8 +330,8 @@ Each of the directives in Roadhouse can be used individually, but to create a ty
 - `rh-on-create` is a callback function
 - `rh-on-update` is a callback function
 - `rh-on-delete` is a callback function
-- `rh-show-edit-delete` is a boolean to hide the delete button in the edit
-  dialog
+- `rh-show-edit-delete` is a boolean or callback function used for setting the
+visibility of the edit dialog delete button. Default is true.
 - `rh-can-edit-item` is a callback function that receives the corresponding
 item object as an argument and should return a boolean. Boolean result
 determines if the item edit button is shown for the row.
