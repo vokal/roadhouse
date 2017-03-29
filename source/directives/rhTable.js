@@ -27,7 +27,7 @@ function ( $compile, $rootScope, ngDialog, alertify )
             create: "=rhOnCreate",
             delete: "=rhOnDelete",
             loading: "=rhLoading",
-            showEditDelete: "=?rhHideEditDelete",
+            showEditDelete: "=?rhShowEditDelete",
             canEditItem: "=?rhCanEditItem",
             canDeleteItem: "=?rhCanDeleteItem",
         },
@@ -70,8 +70,6 @@ function ( $compile, $rootScope, ngDialog, alertify )
             var openDialog = function ( dialogScope )
             {
                 dialogScope.definition = scope.definition;
-                dialogScope.showDelete = scope.showEditDelete;
-
                 dialogScope.cancel = function ()
                 {
                     ngDialog.closeAll();
@@ -91,6 +89,7 @@ function ( $compile, $rootScope, ngDialog, alertify )
             {
                 var dialogScope = scope.$new();
                 dialogScope.item = angular.copy( item );
+                dialogScope.showDelete = scope.showEditDelete;
                 dialogScope.save = function ( item )
                 {
                     scope.update( item )

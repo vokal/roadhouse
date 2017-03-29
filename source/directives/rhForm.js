@@ -12,7 +12,7 @@ module.exports = [ "$compile", function ( $compile )
             cancel: "=rhOnCancel",
             model: "=rhModel",
             titleVisible: "=rhTitleVisible",
-            showDelete: "=?rhHideDelete"
+            showDelete: "=?rhShowDelete"
         },
         link: function ( scope, element )
         {
@@ -44,6 +44,17 @@ module.exports = [ "$compile", function ( $compile )
                         scope.save( scope.model );
                     }
                 };
+                scope.getShowDeleteState = function ()
+                {
+                    // NOTE: Maintain Default for Previous Implementation
+                    if ( !(typeof( scope.showDelete ) === 'boolean' || angular.isFunction( scope.showDelete )) )
+                    {
+                        return true;
+                    }
+                    return Boolean(
+                        angular.isFunction( scope.showDelete ) ? scope.showDelete( scope.model ) : scope.showDelete
+                    );
+                }
 
                 keys.forEach( function ( key )
                 {
@@ -76,7 +87,7 @@ module.exports = [ "$compile", function ( $compile )
 
                 scope.formName = "rh" + ( scope.definition.meta.title || "" ).replace( /[^\w\d]*/g, "" ) + "Form";
                 scope.canDelete = Boolean(
-                  utils.runIfFunc( scope.definition.meta.showDelete ) !== false &&
+                  scope.getShowDeleteState() &&
                   scope.model.id &&
                   utils.runIfFunc( scope.definition.meta.canDelete ) !== false
                 );
