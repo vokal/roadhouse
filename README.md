@@ -176,6 +176,42 @@ Whether the field can be edited. When set to `false` an `rh-field` will be disab
 
 * * *
 
+#### `showDelete`
+
+*[Optional] "initial", "empty", Boolean, Function that returns Boolean* | Default: true
+
+**[Form Directive Only]** Optional boolean or callback function switch for hiding
+delete button in the form dialog. For callback function scope.model is provided
+as argument.
+
+* * *
+
+#### `showEditDelete`
+
+*[Optional] "initial", "empty", Boolean, Function that returns Boolean* | Default: true
+
+**[Table Directive Only]** Optional boolean switch or callback function  for
+hiding delete button in the edit dialog. For callback function the corresponding
+table row item is provided as argument.
+
+* * *
+
+#### `canEditItem`
+
+*"Optional" Function that returns Boolean* | Default: Function returning true
+
+**[Table Directive Only]** Optional filter function for selectively
+enabling/disabling which list items have edit capability.
+
+* * *
+
+#### `canDeleteItem`
+
+*"Optional" Function that returns Boolean* | Default: Function returning true
+
+**[Table Directive Only]** Optional filter function for selectively
+enabling/disabling which list items have delete option.
+
 #### `canViewList`
 
 *Boolean* | Default: true
@@ -276,6 +312,9 @@ Each of the directives in Roadhouse can be used individually, but to create a ty
     rh-on-create="list.create"
     rh-on-update="list.update"
     rh-on-delete="list.delete"
+    rh-show-edit-delete="list.hideEditDelete"
+    rh-can-edit-item="list.canEditItem"
+    rh-can-delete-item="list.canDeleteItem"
     rh-loading="list.loading"></div>
 
 <div rh-paginator
@@ -291,6 +330,14 @@ Each of the directives in Roadhouse can be used individually, but to create a ty
 - `rh-on-create` is a callback function
 - `rh-on-update` is a callback function
 - `rh-on-delete` is a callback function
+- `rh-show-edit-delete` is a boolean or callback function used for setting the
+visibility of the edit dialog delete button. Default is true.
+- `rh-can-edit-item` is a callback function that receives the corresponding
+item object as an argument and should return a boolean. Boolean result
+determines if the item edit button is shown for the row.
+- `rh-can-delete-item` is a callback function that receives the corresponding
+item object as an argument and should return a boolean. Boolean result
+determines if the delete button on the edit dialog is hidden.
 - `rh-loading` is a boolean to tell the table whether loading is in progress, this is important so the table knows whether records are loading or the list is loaded with no records as both statuses are displayed for the user
 - `rh-paginator-page-count` is the total number of pages
 - `rh-paginator-current-page` is the current page number
@@ -308,6 +355,7 @@ Each of the directives in Roadhouse can be used individually, but to create a ty
 ```js
 ctrl.list = [];
 ctrl.definition = {...};
+ctrl.showEditDelete = false;
 
 ctrl.getList = function ()
 {
@@ -329,6 +377,9 @@ ctrl.getList = function ()
 ctrl.create = function ( item ) { /* POST item to API */ };
 ctrl.update = function ( item ) { /* PUT item to API */ };
 ctrl.delete = function ( item ) { /* DELETE item from API */ };
+
+ctrl.canEditItem = function ( item ) { /* Retuen Boolean */ };
+ctrl.canDeleteItem = function ( item ) { /* Retuen Boolean */ };
 
 ctrl.getList(); // on load
 ```

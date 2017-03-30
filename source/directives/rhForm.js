@@ -11,7 +11,8 @@ module.exports = [ "$compile", function ( $compile )
             delete: "=rhOnDelete",
             cancel: "=rhOnCancel",
             model: "=rhModel",
-            titleVisible: "=rhTitleVisible"
+            titleVisible: "=rhTitleVisible",
+            showDelete: "=?rhShowDelete"
         },
         link: function ( scope, element )
         {
@@ -43,6 +44,17 @@ module.exports = [ "$compile", function ( $compile )
                         scope.save( scope.model );
                     }
                 };
+                scope.getShowDeleteState = function ()
+                {
+                    // NOTE: Maintain Default for Previous Implementation
+                    if ( !(typeof( scope.showDelete ) === 'boolean' || angular.isFunction( scope.showDelete )) )
+                    {
+                        return true;
+                    }
+                    return Boolean(
+                        angular.isFunction( scope.showDelete ) ? scope.showDelete( scope.model ) : scope.showDelete
+                    );
+                }
 
                 keys.forEach( function ( key )
                 {
@@ -74,7 +86,11 @@ module.exports = [ "$compile", function ( $compile )
                 } );
 
                 scope.formName = "rh" + ( scope.definition.meta.title || "" ).replace( /[^\w\d]*/g, "" ) + "Form";
-                scope.canDelete = scope.model.id && utils.runIfFunc( scope.definition.meta.canDelete ) !== false;
+                scope.canDelete = Boolean(
+                  scope.getShowDeleteState() &&
+                  scope.model.id &&
+                  utils.runIfFunc( scope.definition.meta.canDelete ) !== false
+                );
 
 
                 var form = '<form name="{{ formName }}" class="rh-form" data-ng-submit="saveClick( ' + scope.formName + ' )">'
