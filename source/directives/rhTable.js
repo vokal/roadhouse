@@ -38,8 +38,8 @@ function ( $compile, $rootScope, ngDialog, alertify )
                 scope.loading = true;
             }
 
-            scope.canEditItem = angular.isFunction(scope.canEditItem) ? scope.canEditItem : function() { return true };
-            scope.canDeleteItem = angular.isFunction(scope.canDeleteItem) ? scope.canDeleteItem : function() { return true };
+            scope.canEditItem = angular.isFunction(scope.canEditItem) ? scope.canEditItem : function() { return true; };
+            scope.canDeleteItem = angular.isFunction(scope.canDeleteItem) ? scope.canDeleteItem : function() { return true; };
 
             var getIndexById = function ( id )
             {
